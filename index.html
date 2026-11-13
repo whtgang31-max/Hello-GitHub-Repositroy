@@ -4,107 +4,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexusTier | Minecraft PvP Tiers</title>
-
+<title>NexusTier | Minecraft PvP</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:#090b12;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  min-height:100vh;
-}
-header{
-  height:80px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 8%;
-  border-bottom:1px solid #202333;
-  background:#0d101a;
-}
-.logo{font-size:25px;font-weight:900;color:#a78bfa}
+body{background:#090b12;color:white;font-family:Arial,sans-serif;min-height:100vh}
+header{height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 8%;border-bottom:1px solid #24283a;background:#0d101a}
+.logo{font-size:26px;font-weight:900;color:#a78bfa}
 .logo span{color:white}
-nav{display:flex;align-items:center;gap:15px}
-button{
-  border:0;
-  cursor:pointer;
-  font-weight:bold;
-  border-radius:9px;
-  padding:13px 20px;
-  color:white;
-  background:#7654e8;
-  transition:.2s;
-}
+button{border:0;cursor:pointer;font-weight:bold;border-radius:9px;padding:13px 20px;color:white;background:#7654e8;transition:.2s}
 button:hover{background:#9278ff;transform:translateY(-2px)}
+.discord{background:#5865f2}
 #logout{background:#292d3d}
-.hero{
-  min-height:75vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:35px 20px;
-}
-.tag{
-  color:#b5a3ff;
-  background:#1b1730;
-  border:1px solid #49358b;
-  padding:9px 17px;
-  border-radius:30px;
-  font-size:13px;
-  margin-bottom:25px;
-}
+.hero{min-height:75vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:35px 20px}
+.tag{color:#b5a3ff;background:#1b1730;border:1px solid #49358b;padding:9px 17px;border-radius:30px;font-size:13px;margin-bottom:25px}
 h1{font-size:clamp(42px,8vw,75px);font-weight:900}
 h1 span{color:#9879ff}
-.description{
-  color:#9da3b8;
-  font-size:17px;
-  max-width:550px;
-  line-height:1.7;
-  margin:22px 0 30px;
-}
-.discord{background:#5865f2;font-size:16px}
-#profile{
-  display:none;
-  background:#111522;
-  border:1px solid #30364b;
-  border-radius:15px;
-  padding:18px 25px;
-  margin-top:25px;
-  align-items:center;
-  gap:13px;
-}
-#avatar{width:45px;height:45px;border-radius:50%}
-#username{font-weight:bold}
+.description{color:#9da3b8;font-size:17px;max-width:550px;line-height:1.7;margin:22px 0 30px}
+#profile{display:none;background:#111522;border:1px solid #30364b;border-radius:15px;padding:18px 25px;margin-top:25px;align-items:center;gap:13px}
+#avatar{width:50px;height:50px;border-radius:50%;object-fit:cover}
+#username{font-weight:bold;font-size:17px}
 #status{font-size:12px;color:#9da3b8;margin-top:5px}
-footer{
-  text-align:center;
-  color:#646b80;
-  padding:25px;
-  border-top:1px solid #202333;
-  font-size:13px;
-}
+footer{text-align:center;color:#646b80;padding:25px;border-top:1px solid #202333;font-size:13px}
 #message{color:#ff8585;margin-top:15px;font-size:14px}
 </style>
 </head>
-
 <body>
 
 <header>
   <div class="logo">NEXUS<span>TIER</span></div>
-  <nav>
-    <button id="loginTop" class="discord">Discord ile Giriş</button>
-    <button id="logout" style="display:none">Çıkış Yap</button>
-  </nav>
+  <button id="loginTop" class="discord">Discord ile Giriş</button>
+  <button id="logout" style="display:none">Çıkış Yap</button>
 </header>
 
 <main class="hero">
   <div class="tag">⚔ MINECRAFT PVP TIER SYSTEM</div>
-
   <h1>NEXUS<span>TIER</span></h1>
 
   <p class="description">
@@ -113,24 +47,20 @@ footer{
     ve kendi seviyeni göster.
   </p>
 
-  <button id="loginMain" class="discord">
-    Discord ile Giriş Yap
-  </button>
+  <button id="loginMain" class="discord">Discord ile Giriş Yap</button>
 
   <div id="profile">
-    <img id="avatar" src="" alt="Discord Avatar">
+    <img id="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profil">
     <div>
-      <div id="username"></div>
-      <div id="status">Başarıyla giriş yaptın!</div>
+      <div id="username">Yükleniyor...</div>
+      <div id="status">Discord hesabınla giriş yaptın!</div>
     </div>
   </div>
 
   <div id="message"></div>
 </main>
 
-<footer>
-  © 2026 NexusTier - Minecraft PvP Tier System
-</footer>
+<footer>© 2026 NexusTier - Minecraft PvP Tier System</footer>
 
 <script>
 const SUPABASE_URL = "https://lekptasghssallfngpqi.supabase.co";
@@ -150,55 +80,80 @@ const message = document.getElementById("message");
 async function login(){
   message.textContent = "";
 
-  const { error } = await supabaseClient.auth.signInWithOAuth({
-    provider: "discord",
-    options: {
-      redirectTo: window.location.origin
+  const {error} = await supabaseClient.auth.signInWithOAuth({
+    provider:"discord",
+    options:{
+      redirectTo:window.location.origin
     }
   });
 
-  if(error){
-    message.textContent = "Giriş hatası: " + error.message;
-  }
+  if(error) message.textContent = error.message;
 }
 
 async function showUser(user){
-  if(user){
-    const metadata = user.user_metadata || {};
-    const name = metadata.custom_claims?.global_name ||
-                 metadata.full_name ||
-                 metadata.name ||
-                 metadata.user_name ||
-                 user.email ||
-                 "Discord Kullanıcısı";
-
-    const avatar = metadata.avatar_url || "";
-
-    document.getElementById("username").textContent = name;
-
-    const avatarElement = document.getElementById("avatar");
-    avatarElement.src = avatar || "https://cdn.discordapp.com/embed/avatars/0.png";
-
-    profile.style.display = "flex";
-    loginTop.style.display = "none";
-    loginMain.style.display = "none";
-    logout.style.display = "inline-block";
-  }else{
+  if(!user){
     profile.style.display = "none";
     loginTop.style.display = "inline-block";
     loginMain.style.display = "inline-block";
     logout.style.display = "none";
+    return;
   }
+
+  const metadata = user.user_metadata || {};
+  const identity = user.identities?.[0]?.identity_data || {};
+
+  const name =
+    identity.global_name ||
+    metadata.global_name ||
+    identity.username ||
+    metadata.user_name ||
+    metadata.full_name ||
+    metadata.name ||
+    user.email ||
+    "Discord Kullanıcısı";
+
+  const discordId =
+    identity.sub ||
+    metadata.provider_id ||
+    "";
+
+  const avatarHash =
+    identity.avatar ||
+    metadata.avatar ||
+    "";
+
+  let avatar =
+    identity.avatar_url ||
+    metadata.avatar_url ||
+    metadata.picture ||
+    "";
+
+  if(!avatar && discordId && avatarHash){
+    avatar = `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png`;
+  }
+
+  document.getElementById("username").textContent = name;
+
+  document.getElementById("avatar").src =
+    avatar || "https://cdn.discordapp.com/embed/avatars/0.png";
+
+  document.getElementById("status").textContent =
+    "Discord hesabınla giriş yaptın!";
+
+  profile.style.display = "flex";
+  loginTop.style.display = "none";
+  loginMain.style.display = "none";
+  logout.style.display = "inline-block";
 }
 
-loginTop.addEventListener("click", login);
-loginMain.addEventListener("click", login);
+loginTop.addEventListener("click",login);
+loginMain.addEventListener("click",login);
 
-logout.addEventListener("click", async () => {
-  const { error } = await supabaseClient.auth.signOut();
+logout.addEventListener("click",async()=>{
+  const {error} = await supabaseClient.auth.signOut();
 
   if(error){
-    message.textContent = "Çıkış hatası: " + error.message;
+    message.textContent = error.message;
   }else{
     message.textContent = "";
     await showUser(null);
@@ -206,22 +161,21 @@ logout.addEventListener("click", async () => {
 });
 
 async function initialize(){
-  const { data, error } = await supabaseClient.auth.getSession();
+  const {data,error} = await supabaseClient.auth.getSession();
 
   if(error){
-    message.textContent = "Oturum hatası: " + error.message;
+    message.textContent = error.message;
     return;
   }
 
   await showUser(data.session?.user || null);
 }
 
-supabaseClient.auth.onAuthStateChange((_event, session) => {
+supabaseClient.auth.onAuthStateChange((_event,session)=>{
   showUser(session?.user || null);
 });
 
 initialize();
 </script>
-
 </body>
 </html>
