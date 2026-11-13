@@ -4,118 +4,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexusTier | Minecraft PvP Rankings</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+<title>NexusTier | Minecraft PvP Tiers</title>
 
-:root {
-  --bg:#090812; --panel:#12101f; --purple:#8b5cf6;
-  --text:#f5f3ff; --muted:#9893ad; --border:#29243b;
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#090b12;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  min-height:100vh;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
-header{height:75px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 7%;background:#0d0b17}
-.logo{font-size:23px;font-weight:900;letter-spacing:-1px}
-.logo span{color:#a78bfa}
-nav{display:flex;gap:25px}
-nav a{color:var(--muted);text-decoration:none;font-size:14px}
-nav a:hover{color:white}
-.login{background:var(--purple);color:white;padding:11px 18px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:700}
-main{max-width:1100px;margin:auto;padding:65px 22px}
-.hero{text-align:center;padding:55px 0 65px}
-.tag{display:inline-block;border:1px solid #45336d;background:#1b1430;color:#c4b5fd;padding:8px 14px;border-radius:30px;font-size:12px}
-h1{font-size:clamp(40px,7vw,68px);line-height:1.08;margin:24px 0 15px;letter-spacing:-3px}
-h1 span{color:#a78bfa}
-.hero p{color:var(--muted);font-size:15px;line-height:1.8}
-.actions{display:flex;justify-content:center;gap:12px;margin-top:28px}
-.btn{padding:14px 20px;border-radius:9px;text-decoration:none;font-weight:700;font-size:13px}
-.primary{background:var(--purple);color:white}
-.secondary{border:1px solid var(--border);color:white}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:55px}
-.stat,.panel{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px}
-.stat small{color:var(--muted)}
-.stat strong{display:block;font-size:27px;margin-top:9px}
-.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-.section-head h2{font-size:21px}
-select,input{background:#171426;color:white;border:1px solid var(--border);border-radius:8px;padding:11px;outline:none}
-input{width:100%;margin-bottom:14px}
-table{width:100%;border-collapse:collapse;text-align:left}
-th{color:var(--muted);font-size:11px;text-transform:uppercase}
-td,th{padding:16px 12px;border-bottom:1px solid var(--border);font-size:13px}
-.player{font-weight:700}
-.tier{display:inline-block;padding:6px 9px;border-radius:6px;font-size:11px;font-weight:800}
-.HT1{background:#542c24;color:#ffb49d}.HT2{background:#533c20;color:#ffd28b}
-.HT3{background:#493b20;color:#f8df8a}.LT1{background:#243c58;color:#9bcaff}
-.LT2{background:#293b4d;color:#b4d8ff}.LT3{background:#293a35;color:#9ce8bd}
-footer{text-align:center;padding:35px;color:var(--muted);border-top:1px solid var(--border);font-size:12px}
-@media(max-width:650px){
- header{padding:0 17px}nav{display:none}
- main{padding:35px 15px}.stats{gap:8px}
- .stat{padding:13px}.stat strong{font-size:20px}
- td,th{padding:12px 7px;font-size:11px}
+header{
+  height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 8%;
+  border-bottom:1px solid #202333;
+  background:#0d101a;
 }
+.logo{font-size:25px;font-weight:900;color:#a78bfa}
+.logo span{color:white}
+nav{display:flex;align-items:center;gap:15px}
+button{
+  border:0;
+  cursor:pointer;
+  font-weight:bold;
+  border-radius:9px;
+  padding:13px 20px;
+  color:white;
+  background:#7654e8;
+  transition:.2s;
+}
+button:hover{background:#9278ff;transform:translateY(-2px)}
+#logout{background:#292d3d}
+.hero{
+  min-height:75vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:35px 20px;
+}
+.tag{
+  color:#b5a3ff;
+  background:#1b1730;
+  border:1px solid #49358b;
+  padding:9px 17px;
+  border-radius:30px;
+  font-size:13px;
+  margin-bottom:25px;
+}
+h1{font-size:clamp(42px,8vw,75px);font-weight:900}
+h1 span{color:#9879ff}
+.description{
+  color:#9da3b8;
+  font-size:17px;
+  max-width:550px;
+  line-height:1.7;
+  margin:22px 0 30px;
+}
+.discord{background:#5865f2;font-size:16px}
+#profile{
+  display:none;
+  background:#111522;
+  border:1px solid #30364b;
+  border-radius:15px;
+  padding:18px 25px;
+  margin-top:25px;
+  align-items:center;
+  gap:13px;
+}
+#avatar{width:45px;height:45px;border-radius:50%}
+#username{font-weight:bold}
+#status{font-size:12px;color:#9da3b8;margin-top:5px}
+footer{
+  text-align:center;
+  color:#646b80;
+  padding:25px;
+  border-top:1px solid #202333;
+  font-size:13px;
+}
+#message{color:#ff8585;margin-top:15px;font-size:14px}
 </style>
 </head>
+
 <body>
+
 <header>
- <div class="logo">NEXUS<span>TIER</span></div>
- <nav>
-  <a href="#">Ana Sayfa</a>
-  <a href="#rankings">Sıralamalar</a>
-  <a href="#about">Hakkında</a>
- </nav>
- <a class="login" href="#rankings">Oyuncuları Gör</a>
+  <div class="logo">NEXUS<span>TIER</span></div>
+  <nav>
+    <button id="loginTop" class="discord">Discord ile Giriş</button>
+    <button id="logout" style="display:none">Çıkış Yap</button>
+  </nav>
 </header>
 
-<main>
- <section class="hero">
-  <div class="tag">✦ MINECRAFT PVP TIERLIST</div>
-  <h1>Gücünü <span>Kanıtla.</span><br>Tierini Göster.</h1>
-  <p>Minecraft PvP dünyasının oyuncu sıralaması.<br>Kitlere göre tierleri keşfet, rakiplerini incele ve zirveye çık.</p>
-  <div class="actions">
-   <a class="btn primary" href="#rankings">Sıralamaları Keşfet →</a>
-   <a class="btn secondary" href="#about">Daha Fazla Bilgi</a>
-  </div>
- </section>
+<main class="hero">
+  <div class="tag">⚔ MINECRAFT PVP TIER SYSTEM</div>
 
- <section class="stats">
-  <div class="stat"><small>TOPLAM OYUNCU</small><strong>0</strong></div>
-  <div class="stat"><small>KAYITLI KİT</small><strong>8</strong></div>
-  <div class="stat"><small>PLATFORM</small><strong>OPEN</strong></div>
- </section>
+  <h1>NEXUS<span>TIER</span></h1>
 
- <section id="rankings">
-  <div class="section-head">
-   <h2>⚔ Oyuncu Sıralaması</h2>
-   <select id="kit">
-    <option value="All">Tüm Kitler</option>
-    <option value="Sword">Sword</option>
-    <option value="Axe">Axe</option>
-    <option value="Crystal">Crystal</option>
-    <option value="UHC">UHC</option>
-    <option value="Pot">Pot</option>
-    <option value="NethPot">NethPot</option>
-    <option value="SMP">SMP</option>
-    <option value="Mace">Mace</option>
-   </select>
-  </div>
-  <div class="panel">
-   <input id="search" placeholder="Oyuncu ara...">
-   <table>
-    <thead><tr><th>#</th><th>Oyuncu</th><th>Kit</th><th>Tier</th></tr></thead>
-    <tbody id="players">
-     <tr><td colspan="4" style="text-align:center;color:#9893ad">Henüz oyuncu eklenmedi.</td></tr>
-    </tbody>
-   </table>
-  </div>
- </section>
+  <p class="description">
+    Minecraft PvP dünyasının oyuncularını keşfet.
+    Tier seviyelerini incele, oyuncuları karşılaştır
+    ve kendi seviyeni göster.
+  </p>
 
- <section id="about" style="padding:65px 0;text-align:center">
-  <h2>NexusTier Nedir?</h2>
-  <p style="color:#9893ad;line-height:1.8">Minecraft PvP oyuncularının kit bazlı performanslarını ve tierlerini takip edebileceğin topluluk platformu.</p>
- </section>
+  <button id="loginMain" class="discord">
+    Discord ile Giriş Yap
+  </button>
+
+  <div id="profile">
+    <img id="avatar" src="" alt="Discord Avatar">
+    <div>
+      <div id="username"></div>
+      <div id="status">Başarıyla giriş yaptın!</div>
+    </div>
+  </div>
+
+  <div id="message"></div>
 </main>
 
-<footer>© 2026 NexusTier · Minecraft PvP Rankings</footer>
+<footer>
+  © 2026 NexusTier - Minecraft PvP Tier System
+</footer>
+
+<script>
+const SUPABASE_URL = "https://lekptasghssallfngpqi.supabase.co";
+const SUPABASE_KEY = "sb_publishable_3jNFB8Lbyg5_ElUH9vBKdg_4LMKkZGF";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const loginTop = document.getElementById("loginTop");
+const loginMain = document.getElementById("loginMain");
+const logout = document.getElementById("logout");
+const profile = document.getElementById("profile");
+const message = document.getElementById("message");
+
+async function login(){
+  message.textContent = "";
+
+  const { error } = await supabaseClient.auth.signInWithOAuth({
+    provider: "discord",
+    options: {
+      redirectTo: window.location.origin
+    }
+  });
+
+  if(error){
+    message.textContent = "Giriş hatası: " + error.message;
+  }
+}
+
+async function showUser(user){
+  if(user){
+    const metadata = user.user_metadata || {};
+    const name = metadata.custom_claims?.global_name ||
+                 metadata.full_name ||
+                 metadata.name ||
+                 metadata.user_name ||
+                 user.email ||
+                 "Discord Kullanıcısı";
+
+    const avatar = metadata.avatar_url || "";
+
+    document.getElementById("username").textContent = name;
+
+    const avatarElement = document.getElementById("avatar");
+    avatarElement.src = avatar || "https://cdn.discordapp.com/embed/avatars/0.png";
+
+    profile.style.display = "flex";
+    loginTop.style.display = "none";
+    loginMain.style.display = "none";
+    logout.style.display = "inline-block";
+  }else{
+    profile.style.display = "none";
+    loginTop.style.display = "inline-block";
+    loginMain.style.display = "inline-block";
+    logout.style.display = "none";
+  }
+}
+
+loginTop.addEventListener("click", login);
+loginMain.addEventListener("click", login);
+
+logout.addEventListener("click", async () => {
+  const { error } = await supabaseClient.auth.signOut();
+
+  if(error){
+    message.textContent = "Çıkış hatası: " + error.message;
+  }else{
+    message.textContent = "";
+    await showUser(null);
+  }
+});
+
+async function initialize(){
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if(error){
+    message.textContent = "Oturum hatası: " + error.message;
+    return;
+  }
+
+  await showUser(data.session?.user || null);
+}
+
+supabaseClient.auth.onAuthStateChange((_event, session) => {
+  showUser(session?.user || null);
+});
+
+initialize();
+</script>
+
 </body>
 </html>
