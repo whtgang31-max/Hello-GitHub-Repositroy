@@ -8,56 +8,102 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#090b12;color:white;font-family:Arial,sans-serif;min-height:100vh}
-header{height:80px;display:flex;align-items:center;justify-content:space-between;padding:0 8%;border-bottom:1px solid #24283a;background:#0d101a}
-.logo{font-size:26px;font-weight:900;color:#a78bfa}
+body{background:#090b12;color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+header{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 7%;border-bottom:1px solid #25283a;background:#0d101a;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:900;color:#a78bfa}
 .logo span{color:white}
-button{border:0;cursor:pointer;font-weight:bold;border-radius:9px;padding:13px 20px;color:white;background:#7654e8;transition:.2s}
-button:hover{background:#9278ff;transform:translateY(-2px)}
+button{border:0;cursor:pointer;font-weight:bold;border-radius:9px;padding:12px 18px;color:white;background:#7654e8}
+button:hover{background:#9278ff}
 .discord{background:#5865f2}
 #logout{background:#292d3d}
-.hero{min-height:75vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:35px 20px}
-.tag{color:#b5a3ff;background:#1b1730;border:1px solid #49358b;padding:9px 17px;border-radius:30px;font-size:13px;margin-bottom:25px}
-h1{font-size:clamp(42px,8vw,75px);font-weight:900}
+main{max-width:1100px;margin:auto;padding:45px 20px}
+.hero{text-align:center;padding:45px 10px 55px}
+.tag{display:inline-block;color:#b5a3ff;background:#1b1730;border:1px solid #49358b;padding:9px 17px;border-radius:30px;font-size:12px;margin-bottom:23px}
+h1{font-size:clamp(42px,8vw,70px);font-weight:900}
 h1 span{color:#9879ff}
-.description{color:#9da3b8;font-size:17px;max-width:550px;line-height:1.7;margin:22px 0 30px}
-#profile{display:none;background:#111522;border:1px solid #30364b;border-radius:15px;padding:18px 25px;margin-top:25px;align-items:center;gap:13px}
-#avatar{width:50px;height:50px;border-radius:50%;object-fit:cover}
-#username{font-weight:bold;font-size:17px}
-#status{font-size:12px;color:#9da3b8;margin-top:5px}
-footer{text-align:center;color:#646b80;padding:25px;border-top:1px solid #202333;font-size:13px}
-#message{color:#ff8585;margin-top:15px;font-size:14px}
+.description{color:#9da3b8;font-size:16px;max-width:550px;line-height:1.7;margin:20px auto 25px}
+#profile{display:none;background:#111522;border:1px solid #30364b;border-radius:14px;padding:14px 20px;margin:20px auto;align-items:center;gap:12px;width:max-content;max-width:100%}
+#avatar{width:45px;height:45px;border-radius:50%;object-fit:cover}
+#username{font-weight:bold}
+#status{font-size:12px;color:#9da3b8;margin-top:4px}
+.section-title{font-size:25px;margin-bottom:18px}
+.search-wrap{display:flex;gap:10px;margin-bottom:22px}
+#search{width:100%;background:#111522;border:1px solid #30364b;border-radius:10px;padding:15px;color:white;font-size:15px;outline:none}
+#search:focus{border-color:#9879ff}
+#players{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.player-card{background:#111522;border:1px solid #292e43;border-radius:13px;padding:18px;cursor:pointer;transition:.2s}
+.player-card:hover{border-color:#9879ff;transform:translateY(-3px)}
+.player-name{font-size:18px;font-weight:bold;overflow-wrap:anywhere}
+.player-sub{font-size:12px;color:#8c93aa;margin-top:8px}
+#detail{display:none;margin-top:30px;background:#111522;border:1px solid #343951;border-radius:15px;padding:23px}
+.detail-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+#detailName{font-size:25px;font-weight:bold;overflow-wrap:anywhere}
+#tierGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.tier-card{background:#191e2e;border:1px solid #30364b;border-radius:10px;padding:16px;text-align:center}
+.kit-name{font-size:13px;color:#aeb4c8;margin-bottom:12px}
+.tier{font-size:23px;font-weight:900;color:#b69cff}
+.empty-tier{color:#697187}
+#message{color:#ff8585;text-align:center;margin:15px 0}
+#loading{text-align:center;color:#aeb4c8;padding:25px}
+#empty{text-align:center;color:#858da3;padding:30px;display:none}
+footer{text-align:center;color:#646b80;padding:25px;border-top:1px solid #202333;font-size:13px;margin-top:45px}
+@media(max-width:600px){header{padding:0 15px}.logo{font-size:21px}main{padding:30px 14px}.detail-head{align-items:flex-start}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo">NEXUS<span>TIER</span></div>
-  <button id="loginTop" class="discord">Discord ile Giriş</button>
-  <button id="logout" style="display:none">Çıkış Yap</button>
+  <div>
+    <button id="loginTop" class="discord">Discord ile Giriş</button>
+    <button id="logout" style="display:none">Çıkış Yap</button>
+  </div>
 </header>
 
-<main class="hero">
-  <div class="tag">⚔ MINECRAFT PVP TIER SYSTEM</div>
-  <h1>NEXUS<span>TIER</span></h1>
+<main>
+  <section class="hero">
+    <div class="tag">⚔ MINECRAFT PVP TIER SYSTEM</div>
+    <h1>NEXUS<span>TIER</span></h1>
+    <p class="description">
+      Minecraft PvP oyuncularını keşfet, tier seviyelerini incele
+      ve oyuncuların performanslarını karşılaştır.
+    </p>
 
-  <p class="description">
-    Minecraft PvP dünyasının oyuncularını keşfet.
-    Tier seviyelerini incele, oyuncuları karşılaştır
-    ve kendi seviyeni göster.
-  </p>
+    <button id="loginMain" class="discord">Discord ile Giriş Yap</button>
 
-  <button id="loginMain" class="discord">Discord ile Giriş Yap</button>
-
-  <div id="profile">
-    <img id="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profil">
-    <div>
-      <div id="username">Yükleniyor...</div>
-      <div id="status">Discord hesabınla giriş yaptın!</div>
+    <div id="profile">
+      <img id="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profil">
+      <div>
+        <div id="username">Yükleniyor...</div>
+        <div id="status">Discord hesabınla giriş yaptın!</div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div id="message"></div>
+  <section>
+    <h2 class="section-title">Oyuncu Listesi</h2>
+
+    <div class="search-wrap">
+      <input id="search" placeholder="Minecraft oyuncusu ara..." autocomplete="off">
+      <button id="refresh">Yenile</button>
+    </div>
+
+    <div id="loading">Oyuncular yükleniyor...</div>
+    <div id="message"></div>
+    <div id="players"></div>
+    <div id="empty">Henüz kayıtlı oyuncu bulunamadı.</div>
+  </section>
+
+  <section id="detail">
+    <div class="detail-head">
+      <div>
+        <div id="detailName"></div>
+        <div class="player-sub">Minecraft oyuncu profili</div>
+      </div>
+      <button id="closeDetail">Kapat</button>
+    </div>
+    <div id="tierGrid"></div>
+  </section>
 </main>
 
 <footer>© 2026 NexusTier - Minecraft PvP Tier System</footer>
@@ -66,112 +112,195 @@ footer{text-align:center;color:#646b80;padding:25px;border-top:1px solid #202333
 const SUPABASE_URL = "https://lekptasghssallfngpqi.supabase.co";
 const SUPABASE_KEY = "sb_publishable_3jNFB8Lbyg5_ElUH9vBKdg_4LMKkZGF";
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const loginTop = document.getElementById("loginTop");
-const loginMain = document.getElementById("loginMain");
-const logout = document.getElementById("logout");
-const profile = document.getElementById("profile");
-const message = document.getElementById("message");
+const kits = [
+  {id:"Sword",name:"Sword"},
+  {id:"Axe",name:"Axe"},
+  {id:"Crystal",name:"Crystal"},
+  {id:"UHC",name:"UHC"},
+  {id:"Pot",name:"Pot"},
+  {id:"NethPot",name:"NethPot"},
+  {id:"SMP",name:"SMP"},
+  {id:"Mace",name:"Mace"}
+];
+
+let allPlayers = [];
+let allTiers = [];
+
+const $ = id => document.getElementById(id);
 
 async function login(){
-  message.textContent = "";
-
-  const {error} = await supabaseClient.auth.signInWithOAuth({
+  $("message").textContent = "";
+  const {error} = await db.auth.signInWithOAuth({
     provider:"discord",
-    options:{
-      redirectTo:window.location.origin
-    }
+    options:{redirectTo:window.location.origin}
   });
-
-  if(error) message.textContent = error.message;
+  if(error) $("message").textContent = error.message;
 }
 
 async function showUser(user){
   if(!user){
-    profile.style.display = "none";
-    loginTop.style.display = "inline-block";
-    loginMain.style.display = "inline-block";
-    logout.style.display = "none";
+    $("profile").style.display="none";
+    $("loginTop").style.display="inline-block";
+    $("loginMain").style.display="inline-block";
+    $("logout").style.display="none";
     return;
   }
 
-  const metadata = user.user_metadata || {};
-  const identity = user.identities?.[0]?.identity_data || {};
+  const meta=user.user_metadata || {};
+  const identity=user.identities?.[0]?.identity_data || {};
 
   const name =
     identity.global_name ||
-    metadata.global_name ||
+    meta.global_name ||
     identity.username ||
-    metadata.user_name ||
-    metadata.full_name ||
-    metadata.name ||
+    meta.user_name ||
+    meta.full_name ||
+    meta.name ||
     user.email ||
     "Discord Kullanıcısı";
 
-  const discordId =
-    identity.sub ||
-    metadata.provider_id ||
-    "";
+  const discordId=identity.sub || meta.provider_id || "";
+  const avatarHash=identity.avatar || meta.avatar || "";
 
-  const avatarHash =
-    identity.avatar ||
-    metadata.avatar ||
-    "";
-
-  let avatar =
-    identity.avatar_url ||
-    metadata.avatar_url ||
-    metadata.picture ||
-    "";
+  let avatar=identity.avatar_url || meta.avatar_url || meta.picture || "";
 
   if(!avatar && discordId && avatarHash){
-    avatar = `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png`;
+    avatar=`https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png`;
   }
 
-  document.getElementById("username").textContent = name;
-
-  document.getElementById("avatar").src =
-    avatar || "https://cdn.discordapp.com/embed/avatars/0.png";
-
-  document.getElementById("status").textContent =
-    "Discord hesabınla giriş yaptın!";
-
-  profile.style.display = "flex";
-  loginTop.style.display = "none";
-  loginMain.style.display = "none";
-  logout.style.display = "inline-block";
+  $("username").textContent=name;
+  $("avatar").src=avatar || "https://cdn.discordapp.com/embed/avatars/0.png";
+  $("profile").style.display="flex";
+  $("loginTop").style.display="none";
+  $("loginMain").style.display="none";
+  $("logout").style.display="inline-block";
 }
 
-loginTop.addEventListener("click",login);
-loginMain.addEventListener("click",login);
+async function loadPlayers(){
+  $("loading").style.display="block";
+  $("players").innerHTML="";
+  $("empty").style.display="none";
+  $("message").textContent="";
 
-logout.addEventListener("click",async()=>{
-  const {error} = await supabaseClient.auth.signOut();
+  const {data:players,error:playerError}=await db
+    .from("players")
+    .select("id,minecraft_username,discord_id,created_at")
+    .order("minecraft_username");
 
+  if(playerError){
+    $("loading").style.display="none";
+    $("message").textContent="Oyuncular yüklenemedi: "+playerError.message;
+    return;
+  }
+
+  const {data:tiers,error:tierError}=await db
+    .from("player_tiers")
+    .select("id,player_id,kit_id,tier,verified_at");
+
+  if(tierError){
+    $("loading").style.display="none";
+    $("message").textContent="Tierler yüklenemedi: "+tierError.message;
+    return;
+  }
+
+  allPlayers=players || [];
+  allTiers=tiers || [];
+
+  $("loading").style.display="none";
+  renderPlayers();
+}
+
+function renderPlayers(){
+  const query=$("search").value.trim().toLowerCase();
+
+  const filtered=allPlayers.filter(player =>
+    (player.minecraft_username || "").toLowerCase().includes(query)
+  );
+
+  $("players").innerHTML="";
+  $("empty").style.display=filtered.length ? "none":"block";
+
+  filtered.forEach(player=>{
+    const count=allTiers.filter(t=>t.player_id===player.id).length;
+
+    const card=document.createElement("div");
+    card.className="player-card";
+
+    const name=document.createElement("div");
+    name.className="player-name";
+    name.textContent=player.minecraft_username;
+
+    const sub=document.createElement("div");
+    sub.className="player-sub";
+    sub.textContent=count+" / 8 kitte tier kaydı";
+
+    card.append(name,sub);
+    card.addEventListener("click",()=>openPlayer(player));
+    $("players").appendChild(card);
+  });
+}
+
+function openPlayer(player){
+  $("detail").style.display="block";
+  $("detailName").textContent=player.minecraft_username;
+  $("tierGrid").innerHTML="";
+
+  kits.forEach(kit=>{
+    const record=allTiers.find(t =>
+      t.player_id===player.id && t.kit_id===kit.id
+    );
+
+    const card=document.createElement("div");
+    card.className="tier-card";
+
+    const kitName=document.createElement("div");
+    kitName.className="kit-name";
+    kitName.textContent=kit.name;
+
+    const tier=document.createElement("div");
+    tier.className=record ? "tier":"tier empty-tier";
+    tier.textContent=record ? record.tier:"Unranked";
+
+    card.append(kitName,tier);
+    $("tierGrid").appendChild(card);
+  });
+
+  $("detail").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+$("loginTop").addEventListener("click",login);
+$("loginMain").addEventListener("click",login);
+
+$("logout").addEventListener("click",async()=>{
+  const {error}=await db.auth.signOut();
   if(error){
-    message.textContent = error.message;
+    $("message").textContent=error.message;
   }else{
-    message.textContent = "";
     await showUser(null);
   }
 });
 
+$("search").addEventListener("input",renderPlayers);
+$("refresh").addEventListener("click",loadPlayers);
+$("closeDetail").addEventListener("click",()=>{
+  $("detail").style.display="none";
+});
+
 async function initialize(){
-  const {data,error} = await supabaseClient.auth.getSession();
+  const {data,error}=await db.auth.getSession();
 
   if(error){
-    message.textContent = error.message;
-    return;
+    $("message").textContent="Oturum hatası: "+error.message;
+  }else{
+    await showUser(data.session?.user || null);
   }
 
-  await showUser(data.session?.user || null);
+  await loadPlayers();
 }
 
-supabaseClient.auth.onAuthStateChange((_event,session)=>{
+db.auth.onAuthStateChange((_event,session)=>{
   showUser(session?.user || null);
 });
 
