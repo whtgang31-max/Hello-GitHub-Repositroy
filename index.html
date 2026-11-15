@@ -4,307 +4,308 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexusTier | Minecraft PvP</title>
+<title>NexusTier | Competitive Minecraft PvP</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
---bg:#080910;--panel:#111321;--panel2:#191c2d;
---border:#292d43;--purple:#9875ff;--purple2:#7048e8;
---text:#f5f3ff;--muted:#9297ad;--red:#d34865;
+--bg:#080a12;--panel:#101421;--panel2:#171d2d;
+--border:#252d42;--purple:#a78bfa;--purple2:#7954df;
+--text:#f5f4ff;--muted:#8d96ad;--green:#50d6a0;
 }
 html{scroll-behavior:smooth;scroll-padding-top:100px}
-body{background:radial-gradient(ellipse at 50% -20%,#29204d 0%,transparent 55%),var(--bg);color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
-button{border:0;cursor:pointer;font-weight:bold;color:white}
+body{background:radial-gradient(ellipse at 50% -15%,#29204c 0%,transparent 50%),var(--bg);color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
+button{border:0;cursor:pointer;font-weight:bold;color:white;font-family:inherit}
 button:disabled{opacity:.5;cursor:not-allowed}
-header{min-height:75px;padding:12px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;background:#0b0c16ef;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;backdrop-filter:blur(15px);flex-wrap:wrap}
+a{color:inherit;text-decoration:none}
+header{position:sticky;top:0;z-index:20;background:#090b14ed;backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.header-inner{max-width:1300px;margin:auto;padding:0 25px;min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .logo{font-size:25px;font-weight:1000;letter-spacing:1px;color:var(--purple);white-space:nowrap}
 .logo span{color:white}
-.nav{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-.nav a,.nav button{background:transparent;color:#c4c7d8;padding:10px 12px;border-radius:8px;text-decoration:none;font-size:13px}
-.nav a:hover,.nav button:hover{background:#25283a;color:white}
-.primary{background:var(--purple2);padding:12px 17px;border-radius:9px}
-.primary:hover{background:var(--purple)}
-.secondary{background:#292d43;padding:11px 15px;border-radius:9px}
+.nav{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.nav a,.nav button{background:transparent;color:#b6bdd0;padding:11px 13px;border-radius:8px;font-size:13px;transition:.2s}
+.nav a:hover,.nav button:hover{background:#1c2234;color:white}
 .discord{background:#5865f2!important;color:white!important}
+.primary{background:var(--purple2);padding:12px 17px;border-radius:9px}
+.primary:hover{background:#9270f4}
+.secondary{background:#252c40;padding:11px 15px;border-radius:9px}
 .danger{background:#a73550!important}
-.danger:hover{background:#d34865!important}
-main{max-width:1200px;margin:auto;padding:25px 20px}
-.hero{text-align:center;padding:55px 10px 35px}
-.tag{display:inline-block;padding:9px 16px;border-radius:30px;background:#211a39;border:1px solid #55408c;color:#c5b4ff;font-size:12px;letter-spacing:1px;margin-bottom:20px}
-h1{font-size:clamp(43px,8vw,76px);font-weight:1000;letter-spacing:-3px}
-h1 span{color:var(--purple)}
-.hero p{color:var(--muted);line-height:1.7;max-width:620px;margin:15px auto 22px}
-#profile{display:none;margin:20px auto 0;padding:10px 16px;width:max-content;max-width:100%;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--border);border-radius:13px}
-#avatar{width:42px;height:42px;border-radius:50%;object-fit:cover}
+main{max-width:1250px;margin:auto;padding:25px 22px}
+.hero{text-align:center;padding:65px 10px 45px}
+.hero-tag{display:inline-block;background:#201a36;border:1px solid #58448a;color:#c8b8ff;padding:9px 16px;border-radius:30px;font-size:11px;font-weight:bold;letter-spacing:2px;margin-bottom:20px}
+.hero h1{font-size:clamp(45px,8vw,82px);font-weight:1000;letter-spacing:-4px}
+.hero h1 span{color:var(--purple)}
+.hero p{max-width:620px;margin:16px auto 24px;color:var(--muted);font-size:15px;line-height:1.8}
+.hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;max-width:650px;margin:35px auto 0}
+.stat-box{padding:17px;background:#111522c9;border:1px solid var(--border);border-radius:13px}
+.stat-number{font-size:27px;font-weight:1000;color:var(--purple)}
+.stat-label{font-size:11px;color:var(--muted);margin-top:6px;letter-spacing:1px}
+#profile{display:none;align-items:center;gap:12px;width:max-content;max-width:100%;margin:22px auto 0;padding:10px 15px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
+#avatar{width:40px;height:40px;border-radius:50%;object-fit:cover}
 #username{font-weight:bold}
-#status{font-size:12px;color:var(--muted);margin-top:4px}
-#adminToggle{display:none;margin-top:15px}
+#status{font-size:11px;color:var(--muted);margin-top:4px}
+#adminToggle{display:none;margin:18px auto 0}
+#message{text-align:center;color:#ff8585;padding:10px;overflow-wrap:anywhere}
 .section{margin-top:42px;scroll-margin-top:100px}
-.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-.section-title{font-size:24px;font-weight:900}
-.section-sub{color:var(--muted);font-size:13px;margin-top:6px}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:5px 0 15px}
-.tab{flex-shrink:0;background:#151727;border:1px solid var(--border);color:#aeb2c7;padding:11px 17px;border-radius:9px}
-.tab.active{background:var(--purple2);border-color:var(--purple);color:white}
-.search-wrap{display:flex;gap:10px;margin-bottom:18px}
-input,select,textarea{width:100%;background:#0d1020;color:white;border:1px solid var(--border);border-radius:9px;padding:13px;font-size:14px;outline:none}
-textarea{min-height:80px;resize:vertical}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:20px}
+.section-title{font-size:25px;font-weight:1000}
+.section-sub{font-size:13px;color:var(--muted);margin-top:6px}
+.eyebrow{font-size:10px;color:var(--purple);font-weight:bold;letter-spacing:2px;margin-bottom:7px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:5px 0 16px;scrollbar-width:thin}
+.tab{flex-shrink:0;padding:12px 18px;border-radius:9px;background:#131827;border:1px solid var(--border);color:#aeb5c9;transition:.2s}
+.tab:hover{border-color:var(--purple)}
+.tab.active{background:linear-gradient(135deg,#8059e5,#5434ad);border-color:#a78bfa;color:white;box-shadow:0 5px 20px #7954df33}
+.ranking-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 18px}
+.search-wrap{display:flex;gap:9px;flex:1;min-width:220px}
+input,select,textarea{background:#0b0f1c;color:white;border:1px solid var(--border);border-radius:9px;padding:13px;font-size:14px;outline:none;width:100%;font-family:inherit}
 input:focus,select:focus,textarea:focus{border-color:var(--purple)}
-#refresh{background:#292d43;padding:0 18px;border-radius:9px}
-#topPlayers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.top-card{position:relative;text-align:center;padding:22px 12px;border-radius:15px;background:linear-gradient(145deg,#1b1b30,#111321);border:1px solid var(--border);cursor:pointer;transition:.2s}
-.top-card:hover,.player-card:hover,.data-card:hover{transform:translateY(-3px);border-color:var(--purple)}
-.top-card.first{border-color:#a98bff;background:linear-gradient(145deg,#30234f,#151321)}
-.top-number{font-size:25px;font-weight:1000;color:#c5b1ff;margin-bottom:12px}
-.top-avatar{width:65px;height:65px;object-fit:cover;border-radius:13px;border:2px solid #66509c;margin-bottom:10px}
+select option{background:#111522}
+#refresh{padding:0 17px;border-radius:9px;background:#252c40}
+.toolbar-select{max-width:190px}
+.top-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:30px}
+.top-card{position:relative;text-align:center;padding:23px 15px;background:linear-gradient(145deg,#171d30,#101421);border:1px solid var(--border);border-radius:15px;cursor:pointer;transition:.2s}
+.top-card:hover,.player-card:hover,.guide-card:hover{transform:translateY(-3px);border-color:var(--purple)}
+.top-card.first{background:linear-gradient(145deg,#30244e,#141421);border-color:#a78bfa}
+.top-medal{font-size:27px;margin-bottom:12px}
+.top-avatar{width:67px;height:67px;object-fit:cover;border-radius:14px;border:2px solid #7558b8;margin-bottom:10px}
 .top-name{font-size:18px;font-weight:900;overflow-wrap:anywhere}
-.top-tier{margin-top:9px;color:#c5b3ff;font-weight:900}
-.top-kit{font-size:12px;color:#aeb4c8;margin-top:5px}
-.top-score{font-size:13px;color:#c4b2ff;margin-top:10px;font-weight:bold}
-#players{display:flex;flex-direction:column;gap:10px}
-.player-card{display:flex;align-items:center;gap:16px;width:100%;background:linear-gradient(105deg,#141728,#10121f);border:1px solid var(--border);border-radius:13px;padding:13px 18px;cursor:pointer;transition:.2s}
-.player-rank{color:#777d96;font-size:14px;font-weight:bold;width:25px;text-align:center;flex-shrink:0}
-.player-avatar{width:49px;height:49px;object-fit:cover;border-radius:11px;background:#22263a;border:1px solid #343952;flex-shrink:0}
+.top-tier{margin-top:10px}
+.top-points{font-size:12px;color:#c5b4ff;margin-top:9px;font-weight:bold}
+.top-rank-label{font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px}
+#players{display:flex;flex-direction:column;gap:9px}
+.player-card{display:flex;align-items:center;gap:15px;padding:13px 17px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(100deg,#141a2a,#0f1320);cursor:pointer;transition:.2s}
+.player-rank{width:27px;text-align:center;color:#737e98;font-size:13px;font-weight:bold;flex-shrink:0}
+.player-avatar{width:48px;height:48px;object-fit:cover;border-radius:11px;border:1px solid #343d58;flex-shrink:0}
 .player-info{flex:1;min-width:0}
-.player-name{font-weight:900;font-size:16px;overflow-wrap:anywhere}
-.player-sub{color:var(--muted);font-size:11px;margin-top:5px}
-.player-tier-area{min-width:100px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
-.player-tier{display:inline-block;padding:6px 13px;border-radius:7px;background:linear-gradient(135deg,#38265f,#282044);border:1px solid #7456b7;color:#d4c4ff;font-size:14px;font-weight:1000}
-.player-kit{font-size:12px;color:#aeb4c8}
-.player-points{min-width:85px;text-align:right;border-left:1px solid var(--border);padding-left:16px}
-.points-number{font-size:19px;font-weight:1000;color:#c5aaff}
-.points-label{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1px}
-#loading,#empty,#message{text-align:center;padding:20px;color:var(--muted)}
-#message{color:#ff8585;overflow-wrap:anywhere}
+.player-name{font-size:15px;font-weight:900;overflow-wrap:anywhere}
+.player-sub{font-size:11px;color:var(--muted);margin-top:5px}
+.player-tier-area{min-width:105px;text-align:center}
+.player-kit{font-size:10px;color:var(--muted);margin-top:6px}
+.player-points{text-align:right;min-width:75px;border-left:1px solid var(--border);padding-left:15px}
+.points-number{font-size:19px;font-weight:1000;color:#c6b3ff}
+.points-label{font-size:9px;color:var(--muted);letter-spacing:1px;margin-top:4px}
+.tier-badge{display:inline-block;padding:6px 12px;border-radius:7px;font-size:12px;font-weight:1000;border:1px solid transparent}
+.HT1{background:#4c1723;color:#ff778d;border-color:#a63e58}
+.LT1{background:#502b1c;color:#ffae77;border-color:#b86a39}
+.HT2{background:#514019;color:#ffe17b;border-color:#a78a37}
+.LT2{background:#344b22;color:#c1f18c;border-color:#668b43}
+.HT3{background:#164b39;color:#72e9b5;border-color:#338c69}
+.LT3{background:#16475a;color:#75dfff;border-color:#3589a8}
+.HT4{background:#263c67;color:#9cbaff;border-color:#5276b4}
+.LT4{background:#40316c;color:#c5aaff;border-color:#795bb6}
+.HT5{background:#48316a;color:#dbb5ff;border-color:#805ab7}
+.LT5{background:#383b4e;color:#d0d4e6;border-color:#70788f}
+.Unranked{background:#252a3a;color:#a1a9bd;border-color:#424b62}
+#loading,#empty{text-align:center;padding:25px;color:var(--muted)}
 #empty{display:none}
-#detail{display:none;margin-top:30px;padding:23px;background:var(--panel);border:1px solid var(--border);border-radius:15px}
-.detail-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
-.detail-user{display:flex;align-items:center;gap:14px;min-width:0}
-#detailAvatar{width:65px;height:65px;object-fit:cover;border-radius:13px;background:#22263a;border:1px solid var(--border)}
-#detailName{font-size:23px;font-weight:900;overflow-wrap:anywhere}
-.detail-score{font-size:13px;color:#c5aaff;margin-top:6px}
-#tierGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px}
-.tier-card{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
-.kit-name{font-size:13px;color:#aeb4c8;margin-bottom:12px}
-.tier{font-size:23px;font-weight:1000;color:#b69cff}
-.empty-tier{color:#697187}
+#detail{display:none;margin-top:30px;padding:24px;background:var(--panel);border:1px solid var(--border);border-radius:16px}
+.detail-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}
+.detail-user{display:flex;align-items:center;gap:15px;min-width:0}
+#detailAvatar{width:72px;height:72px;object-fit:cover;border-radius:14px;border:1px solid var(--border)}
+#detailName{font-size:25px;font-weight:1000;overflow-wrap:anywhere}
+.detail-score{font-size:12px;color:#c5b4ff;margin-top:7px}
+#tierGrid,#myTierGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px}
+.tier-card{background:var(--panel2);border:1px solid var(--border);border-radius:11px;padding:17px 12px;text-align:center}
+.kit-name{font-size:12px;color:#aeb8ce;margin-bottom:12px}
+.tier-value{font-size:21px;font-weight:1000}
+.empty-tier{color:#727b92}
 #adminPanel{display:none;margin:30px 0;padding:23px;background:var(--panel);border:1px solid var(--purple2);border-radius:15px}
-.admin-title{font-size:23px;color:#b69cff;margin-bottom:20px}
-.admin-block{padding:18px 0;border-top:1px solid var(--border);margin-top:20px}
-.admin-block h3{margin-bottom:13px}
-.admin-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.admin-form button{grid-column:1/-1}
-.admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.admin-actions button,.admin-form button{padding:12px 17px;border-radius:9px;background:var(--purple2)}
-#tierEditor{display:none;margin-top:25px;padding-top:20px;border-top:1px solid var(--border)}
-#editorPlayer{margin-bottom:14px}
-#adminMessage{margin-top:13px;color:#b69cff;overflow-wrap:anywhere}
-.admin-note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6}
-.data-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.data-card{background:linear-gradient(145deg,#171a2b,#10121f);border:1px solid var(--border);border-radius:13px;padding:18px;transition:.2s}
-.data-card h3{font-size:18px;margin-bottom:8px}
-.data-card p{color:var(--muted);font-size:13px;line-height:1.6;overflow-wrap:anywhere}
-.data-card .tag-small{display:inline-block;background:#292044;color:#c9b8ff;border:1px solid #55408c;padding:5px 9px;border-radius:7px;font-size:12px;margin:8px 0}
-.clan-members{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:#c4c7d8}
-.team-avatar{width:62px;height:62px;border-radius:50%;object-fit:cover;background:#292d43;margin-bottom:12px;border:2px solid #65509a}
-.admin-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.admin-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;background:#0d1020;border:1px solid var(--border);border-radius:9px;font-size:13px}
-.admin-row button{padding:7px 10px;border-radius:7px}
+.admin-title{font-size:23px;color:#c5b4ff;margin-bottom:20px}
+.admin-block{padding-top:20px;border-top:1px solid var(--border);margin-top:20px}
+.admin-block h3{margin-bottom:13px;font-size:16px}
+.admin-form{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.admin-form button{grid-column:1/-1;padding:13px;border-radius:9px;background:var(--purple2)}
+.admin-actions{display:flex;gap:9px;margin-top:13px;flex-wrap:wrap}
+.admin-actions button{padding:11px 15px;border-radius:9px}
+#tierEditor{display:none;margin-top:22px;padding-top:20px;border-top:1px solid var(--border)}
+#editorPlayer{margin-bottom:13px}
+#adminMessage{margin-top:14px;color:#c5b4ff;overflow-wrap:anywhere}
+.admin-note{font-size:11px;color:var(--muted);line-height:1.7;margin-top:12px}
+.guide-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.guide-card{padding:15px 10px;text-align:center;border:1px solid var(--border);border-radius:11px;background:var(--panel);transition:.2s}
+.guide-card p{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
 #myProfileBox{display:none;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
-#myPlayerInfo{display:flex;align-items:center;gap:15px;margin-bottom:18px}
-#myPlayerInfo img{width:60px;height:60px;border-radius:12px}
-footer{text-align:center;padding:30px;color:#656b80;border-top:1px solid var(--border);margin-top:50px;font-size:13px}
-@media(max-width:750px){
-header{padding:12px 14px}
-.nav{width:100%;justify-content:center}
+#myPlayerInfo{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+#myPlayerInfo img{width:58px;height:58px;border-radius:12px}
+#myProfileMessage{color:var(--muted);font-size:13px}
+footer{margin-top:60px;border-top:1px solid var(--border);padding:35px 20px;text-align:center;color:#6e7890;font-size:12px}
+.footer-logo{font-size:20px;font-weight:1000;color:var(--purple);margin-bottom:10px}
+@media(max-width:850px){
+.header-inner{padding:12px 15px;flex-wrap:wrap}
+.nav{justify-content:center;width:100%}
 .nav a,.nav button{font-size:12px;padding:9px}
+.guide-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:650px){
-main{padding:22px 13px}.hero{padding:40px 5px 25px}
-#topPlayers{grid-template-columns:1fr}
+main{padding:20px 12px}
+.hero{padding:42px 5px 30px}
+.hero-stats{gap:7px}
+.stat-box{padding:13px 6px}
+.stat-number{font-size:22px}
+.stat-label{font-size:9px}
+.top-grid{grid-template-columns:1fr}
+.top-card{padding:17px}
 .admin-form{grid-template-columns:1fr}
 .admin-form button{grid-column:auto}
+.player-card{gap:8px;padding:11px 8px}
+.player-rank{width:18px;font-size:11px}
+.player-avatar{width:39px;height:39px}
+.player-name{font-size:13px}
+.player-sub{font-size:9px}
+.player-tier-area{min-width:65px}
+.tier-badge{font-size:10px;padding:5px 7px}
+.player-kit{font-size:9px}
+.player-points{min-width:48px;padding-left:7px}
+.points-number{font-size:15px}
 .detail-head{align-items:flex-start}
-.player-card{gap:9px;padding:12px 10px}
-.player-rank{width:19px;font-size:12px}
-.player-avatar{width:42px;height:42px}
-.player-name{font-size:14px}.player-sub{font-size:10px}
-.player-tier-area{min-width:72px}
-.player-tier{font-size:12px;padding:5px 9px}
-.player-kit{font-size:10px}
-.player-points{min-width:58px;padding-left:9px}
-.points-number{font-size:16px}
+#detailName{font-size:19px}
+#detailAvatar{width:55px;height:55px}
+.guide-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:380px){
-.player-card{gap:6px;padding:10px 7px}
-.player-avatar{width:36px;height:36px}
+.player-card{gap:5px;padding:9px 5px}
+.player-avatar{width:34px;height:34px}
 .player-rank{width:15px}
-.player-tier-area{min-width:65px}
-.player-points{min-width:51px;padding-left:6px}
+.player-tier-area{min-width:59px}
+.player-points{min-width:42px;padding-left:5px}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">NEXUS<span>TIER</span></div>
+ <div class="header-inner">
+  <a class="logo" href="#">NEXUS<span>TIER</span></a>
   <nav class="nav">
-    <a href="#ranking">Sıralama</a>
-    <a href="#clans">Klanlar</a>
-    <a href="#team">Ekibimiz</a>
-    <a href="#myProfile">Profilim</a>
-    <button id="loginTop" class="discord">Discord ile Giriş</button>
-    <button id="logout" class="secondary" style="display:none">Çıkış</button>
+   <a href="#ranking">Sıralama</a>
+   <a href="#tierGuide">Tier Rehberi</a>
+   <a href="#myProfile">Profilim</a>
+   <a href="#adminPanel" id="adminNav" style="display:none">Yönetim</a>
+   <button id="loginTop" class="discord">Discord ile Giriş</button>
+   <button id="logout" class="secondary" style="display:none">Çıkış</button>
   </nav>
+ </div>
 </header>
 
 <main>
 <section class="hero">
-  <div class="tag">⚔ MINECRAFT PVP COMPETITIVE</div>
-  <h1>NEXUS<span>TIER</span></h1>
-  <p>Minecraft PvP dünyasında yeteneğini kanıtla. Oyuncuları keşfet, tier sıralamalarını incele ve rekabetin zirvesine ulaş.</p>
-  <button id="loginMain" class="primary discord">Discord ile Giriş Yap</button>
-  <div id="profile">
-    <img id="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Profil">
-    <div><div id="username">Yükleniyor...</div><div id="status">Discord hesabınla giriş yaptın!</div></div>
-  </div>
-  <button id="adminToggle" class="primary">⚙ Yönetim Paneli</button>
+ <div class="hero-tag">NEXUSTIER COMPETITIVE</div>
+ <h1>TIER <span>SIRALAMASI</span></h1>
+ <p>Minecraft PvP yeteneğini kanıtla. Her kitte ustalığını göster, oyuncuları keşfet ve NexusTier rekabetinde zirveye yüksel.</p>
+ <div class="hero-actions">
+  <a href="#ranking"><button class="primary">Sıralamayı Keşfet</button></a>
+  <button id="loginMain" class="discord primary">Discord ile Giriş Yap</button>
+ </div>
+ <div class="hero-stats">
+  <div class="stat-box"><div class="stat-number" id="statPlayers">0</div><div class="stat-label">OYUNCU</div></div>
+  <div class="stat-box"><div class="stat-number" id="statTiers">0</div><div class="stat-label">TIER KAYDI</div></div>
+  <div class="stat-box"><div class="stat-number" id="statKits">8</div><div class="stat-label">PVP KİTİ</div></div>
+ </div>
+ <div id="profile">
+  <img id="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Discord avatarı">
+  <div><div id="username">Discord Kullanıcısı</div><div id="status">Hesabına giriş yaptın</div></div>
+ </div>
+ <button id="adminToggle" class="primary">⚙ Yönetim Paneli</button>
 </section>
 
 <div id="message"></div>
 
 <section id="adminPanel">
-  <h2 class="admin-title">⚙ NexusTier Yönetim Paneli</h2>
-
-  <div class="admin-block" style="border-top:0;margin-top:0">
-    <h3>Oyuncu Ekle</h3>
-    <form id="addPlayerForm" class="admin-form">
-      <input id="newPlayer" placeholder="Minecraft kullanıcı adı" maxlength="32" required>
-      <input id="newDiscord" placeholder="Discord ID (isteğe bağlı)">
-      <button type="submit">＋ Oyuncu Ekle</button>
-    </form>
+ <h2 class="admin-title">⚙ NexusTier Yönetim Paneli</h2>
+ <div class="admin-block" style="border-top:0;margin-top:0;padding-top:0">
+  <h3>＋ Oyuncu Ekle</h3>
+  <form id="addPlayerForm" class="admin-form">
+   <input id="newPlayer" placeholder="Minecraft kullanıcı adı" maxlength="32" required>
+   <input id="newDiscord" placeholder="Discord ID (isteğe bağlı)">
+   <button type="submit">Oyuncu Ekle</button>
+  </form>
+ </div>
+ <div id="tierEditor">
+  <h3 id="editorPlayer">Tier Düzenle</h3>
+  <form id="tierForm" class="admin-form">
+   <select id="editKit" required></select>
+   <select id="editTier" required>
+    <option>HT1</option><option>LT1</option>
+    <option>HT2</option><option>LT2</option>
+    <option>HT3</option><option>LT3</option>
+    <option>HT4</option><option>LT4</option>
+    <option>HT5</option><option>LT5</option>
+   </select>
+   <button type="submit">Tier Kaydet</button>
+  </form>
+  <div class="admin-actions">
+   <button id="deletePlayer" class="danger" type="button">Oyuncuyu Sil</button>
+   <button id="cancelEdit" class="secondary" type="button">Kapat</button>
   </div>
-
-  <div id="tierEditor">
-    <h3 id="editorPlayer">Tier Düzenle</h3>
-    <form id="tierForm" class="admin-form">
-      <select id="editKit" required></select>
-      <select id="editTier" required>
-        <option>HT1</option><option>LT1</option>
-        <option>HT2</option><option>LT2</option>
-        <option>HT3</option><option>LT3</option>
-        <option>HT4</option><option>LT4</option>
-        <option>HT5</option><option>LT5</option>
-      </select>
-      <button type="submit">Tier Kaydet</button>
-    </form>
-    <div class="admin-actions">
-      <button id="deletePlayer" class="danger" type="button">Oyuncuyu Sil</button>
-      <button id="cancelEdit" class="secondary" type="button">Kapat</button>
-    </div>
-  </div>
-
-  <div class="admin-block">
-    <h3>＋ Klan Oluştur</h3>
-    <form id="addClanForm" class="admin-form">
-      <input id="clanName" placeholder="Klan adı" maxlength="40" required>
-      <input id="clanTag" placeholder="Klan etiketi (örn. NEX)" maxlength="8" required>
-      <input id="clanLogo" placeholder="Logo URL (isteğe bağlı)">
-      <textarea id="clanDescription" placeholder="Klan açıklaması"></textarea>
-      <button type="submit">Klan Oluştur</button>
-    </form>
-    <div id="adminClanList" class="admin-list"></div>
-  </div>
-
-  <div class="admin-block">
-    <h3>＋ Klana Oyuncu Ekle</h3>
-    <form id="addMemberForm" class="admin-form">
-      <select id="memberClan" required></select>
-      <select id="memberPlayer" required></select>
-      <select id="memberRole">
-        <option value="Member">Üye</option>
-        <option value="Leader">Lider</option>
-        <option value="Co-Leader">Yetkili</option>
-      </select>
-      <button type="submit">Oyuncuyu Klana Ekle</button>
-    </form>
-  </div>
-
-  <div class="admin-block">
-    <h3>＋ Ekip Üyesi Ekle</h3>
-    <form id="addTeamForm" class="admin-form">
-      <input id="teamName" placeholder="İsim" required>
-      <input id="teamRole" placeholder="Görev (Admin, Mod, Tester...)" required>
-      <input id="teamDiscord" placeholder="Discord ID (isteğe bağlı)">
-      <input id="teamAvatar" placeholder="Avatar URL (isteğe bağlı)">
-      <textarea id="teamDescription" placeholder="Açıklama (isteğe bağlı)"></textarea>
-      <button type="submit">Ekip Üyesi Ekle</button>
-    </form>
-    <div id="adminTeamList" class="admin-list"></div>
-  </div>
-
-  <div id="adminMessage"></div>
-  <p class="admin-note">Yönetim işlemleri yalnızca Supabase üzerinde admin olarak yetkilendirilmiş hesaplarda kullanılabilir.</p>
+ </div>
+ <div id="adminMessage"></div>
+ <p class="admin-note">Bu panel yalnızca Supabase üzerinde admin olarak yetkilendirilmiş hesaplarda kullanılabilir.</p>
 </section>
 
 <section id="ranking" class="section">
-  <div class="section-head">
-    <div><h2 class="section-title">Tier Sıralaması</h2><p class="section-sub">Her kitte ustalığını göster.</p></div>
-  </div>
-  <div class="tabs" id="kitTabs"></div>
-  <h3 class="section-title" style="font-size:19px;margin:10px 0 15px">🏆 İlk 3 Oyuncu</h3>
-  <div id="topPlayers"></div>
-  <div class="section-head" style="margin-top:30px">
-    <div><h2 class="section-title" id="listTitle">Genel Sıralama</h2><p class="section-sub">Oyuncuların tierleri ve puanları</p></div>
-  </div>
+ <div class="section-head">
+  <div><div class="eyebrow">NEXUSTIER LEADERBOARD</div><h2 class="section-title">Tier Sıralaması</h2><p class="section-sub">Her kitin en iyi oyuncularını keşfet.</p></div>
+ </div>
+ <div class="tabs" id="kitTabs"></div>
+ <div class="section-head" style="margin-top:10px">
+  <div><h3 class="section-title" style="font-size:19px">🏆 İlk 3 Oyuncu</h3><p class="section-sub">Seçili kategorinin zirvesindekiler</p></div>
+ </div>
+ <div id="topPlayers" class="top-grid"></div>
+ <div class="section-head" style="margin-top:28px">
+  <div><h3 class="section-title" id="listTitle" style="font-size:20px">Genel Sıralama</h3><p class="section-sub">Oyuncu listesini ara ve filtrele.</p></div>
+ </div>
+ <div class="ranking-toolbar">
   <div class="search-wrap">
-    <input id="search" placeholder="Minecraft oyuncusu ara..." autocomplete="off">
-    <button id="refresh">Yenile</button>
+   <input id="search" placeholder="Oyuncu ara..." autocomplete="off">
+   <button id="refresh">↻</button>
   </div>
-  <div id="loading">Oyuncular yükleniyor...</div>
-  <div id="players"></div>
-  <div id="empty" style="display:none">Henüz kayıtlı oyuncu bulunamadı.</div>
+  <select id="sortSelect" class="toolbar-select">
+   <option value="score">Puana göre</option>
+   <option value="name">İsme göre</option>
+   <option value="newest">Yeni eklenen</option>
+  </select>
+ </div>
+ <div id="loading">Oyuncular yükleniyor...</div>
+ <div id="players"></div>
+ <div id="empty">Bu kategoride oyuncu bulunamadı.</div>
 </section>
 
 <section id="detail">
-  <div class="detail-head">
-    <div class="detail-user">
-      <img id="detailAvatar" src="" alt="Minecraft avatarı">
-      <div><div id="detailName"></div><div class="detail-score" id="detailScore"></div><div class="player-sub">Minecraft oyuncu profili</div></div>
-    </div>
-    <button id="closeDetail" class="primary">Kapat</button>
+ <div class="detail-head">
+  <div class="detail-user">
+   <img id="detailAvatar" src="" alt="Minecraft avatarı">
+   <div><div id="detailName"></div><div class="detail-score" id="detailScore"></div><div class="player-sub">NexusTier oyuncu profili</div></div>
   </div>
-  <div id="tierGrid"></div>
+  <button id="closeDetail" class="secondary">Kapat</button>
+ </div>
+ <div id="tierGrid"></div>
 </section>
 
-<section id="clans" class="section">
-  <div class="section-head">
-    <div><h2 class="section-title">⚔ Klan Yönetimi</h2><p class="section-sub">NexusTier topluluğundaki klanları keşfet.</p></div>
-  </div>
-  <div id="clanGrid" class="data-grid"><p class="section-sub">Klanlar yükleniyor...</p></div>
-</section>
-
-<section id="team" class="section">
-  <div class="section-head">
-    <div><h2 class="section-title">✦ Ekibimiz</h2><p class="section-sub">NexusTier yönetim ve değerlendirme ekibi.</p></div>
-  </div>
-  <div id="teamGrid" class="data-grid"><p class="section-sub">Ekip yükleniyor...</p></div>
+<section id="tierGuide" class="section">
+ <div class="section-head">
+  <div><div class="eyebrow">TIER SYSTEM</div><h2 class="section-title">Tier Rehberi</h2><p class="section-sub">NexusTier sıralama sistemindeki seviyeler.</p></div>
+ </div>
+ <div class="guide-grid" id="guideGrid"></div>
 </section>
 
 <section id="myProfile" class="section">
-  <div class="section-head">
-    <div><h2 class="section-title">Profilim</h2><p class="section-sub">Discord hesabına bağlı NexusTier oyuncu profilin.</p></div>
-  </div>
-  <div id="myProfileBox">
-    <div id="myPlayerInfo"></div>
-    <div id="myTierGrid" class="data-grid"></div>
-  </div>
-  <div id="myProfileMessage" class="section-sub">Profilini görmek için Discord ile giriş yap.</div>
+ <div class="section-head">
+  <div><div class="eyebrow">YOUR ACCOUNT</div><h2 class="section-title">Profilim</h2><p class="section-sub">Discord hesabına bağlı oyuncu bilgilerin.</p></div>
+ </div>
+ <div id="myProfileBox">
+  <div id="myPlayerInfo"></div>
+  <div id="myTierGrid"></div>
+ </div>
+ <div id="myProfileMessage">Profilini görmek için Discord ile giriş yap.</div>
 </section>
 </main>
 
-<footer>© 2026 NexusTier · Minecraft PvP Competitive Tier System</footer>
+<footer>
+ <div class="footer-logo">NEXUSTIER</div>
+Minecraft PvP Competitive Tier System<br><br>
+© 2026 NexusTier · All rights reserved
+</footer>
 
 <script>
 const SUPABASE_URL="https://lekptasghssallfngpqi.supabase.co";
@@ -323,51 +324,70 @@ const kits=[
 {id:"Mace",name:"Mace",emoji:"🔨"}
 ];
 const tierValues=["HT1","LT1","HT2","LT2","HT3","LT3","HT4","LT4","HT5","LT5"];
+const tierDescriptions={
+HT1:"En üst seviye oyuncular",
+LT1:"Üst düzey rekabetçi oyuncular",
+HT2:"Çok güçlü oyuncular",
+LT2:"İleri seviye oyuncular",
+HT3:"Güçlü ve deneyimli oyuncular",
+LT3:"Orta-ileri seviye oyuncular",
+HT4:"Orta seviye oyuncular",
+LT4:"Gelişmekte olan oyuncular",
+HT5:"Başlangıç seviyesi üstü",
+LT5:"Temel seviye oyuncular"
+};
 const $=id=>document.getElementById(id);
 
-let allPlayers=[],allTiers=[],allClans=[],allMembers=[],allTeam=[];
-let selectedPlayer=null,currentUser=null,isAdmin=false,activeKit="General";
+let allPlayers=[],allTiers=[],selectedPlayer=null,currentUser=null,isAdmin=false,activeKit="General";
 
-function escapeHtml(value){
- return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+function escapeHtml(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
-function avatarUrl(username){return "https://mc-heads.net/avatar/"+encodeURIComponent(username)+"/64"}
+function avatarUrl(name){return "https://mc-heads.net/avatar/"+encodeURIComponent(name)+"/64"}
 function tierScore(tier){const i=tierValues.indexOf(tier);return i<0?0:10-i}
-function playerScore(player){
- const r=allTiers.filter(t=>t.player_id===player.id);
+function playerTiers(p){return allTiers.filter(t=>t.player_id===p.id)}
+function playerScore(p){
+ const r=playerTiers(p);
  return r.length?r.reduce((s,t)=>s+tierScore(t.tier),0)/r.length:0;
 }
-function playerKitScore(player,kit){
- const r=allTiers.find(t=>t.player_id===player.id&&t.kit_id===kit);
+function playerKitScore(p,kit){
+ const r=allTiers.find(t=>t.player_id===p.id&&t.kit_id===kit);
  return r?tierScore(r.tier):0;
 }
-function bestRecord(player){
- return allTiers.filter(t=>t.player_id===player.id).sort((a,b)=>tierScore(b.tier)-tierScore(a.tier))[0]||null;
+function displayedScore(p){return activeKit==="General"?playerScore(p):playerKitScore(p,activeKit)}
+function displayedRecord(p){
+ if(activeKit!=="General")return allTiers.find(t=>t.player_id===p.id&&t.kit_id===activeKit)||null;
+ return playerTiers(p).sort((a,b)=>tierScore(b.tier)-tierScore(a.tier))[0]||null;
 }
-function displayedRecord(player){
- return activeKit==="General"?bestRecord(player):allTiers.find(t=>t.player_id===player.id&&t.kit_id===activeKit)||null;
-}
-function displayedScore(player){return activeKit==="General"?playerScore(player):playerKitScore(player,activeKit)}
 function kitInfo(id){return kits.find(k=>k.id===id)}
 function setMessage(msg,error=false){
  $("adminMessage").textContent=msg;
  $("adminMessage").style.color=error?"#ff8585":"#b69cff";
 }
 function setPageMessage(msg){$("message").textContent=msg}
+function tierClass(tier){return tierValues.includes(tier)?tier:"Unranked"}
+function tierBadge(tier){return `<span class="tier-badge ${tierClass(tier)}">${escapeHtml(tier||"Unranked")}</span>`}
 
 async function login(){
  setPageMessage("");
- const {error}=await db.auth.signInWithOAuth({provider:"discord",options:{redirectTo:window.location.origin}});
+ const {error}=await db.auth.signInWithOAuth({
+  provider:"discord",
+  options:{redirectTo:window.location.origin}
+ });
  if(error)setPageMessage(error.message);
 }
 async function checkAdmin(){
  isAdmin=false;
  $("adminToggle").style.display="none";
+ $("adminNav").style.display="none";
  $("adminPanel").style.display="none";
  const {data,error}=await db.rpc("is_nexustier_admin");
  if(error){console.error("Admin kontrolü:",error.message);return}
  isAdmin=data===true;
- if(isAdmin)$("adminToggle").style.display="inline-block";
+ if(isAdmin){
+  $("adminToggle").style.display="block";
+  $("adminNav").style.display="inline-block";
+ }
 }
 function discordDetails(user){
  const meta=user.user_metadata||{};
@@ -387,6 +407,7 @@ async function showUser(user){
   $("loginMain").style.display="inline-block";
   $("logout").style.display="none";
   $("adminToggle").style.display="none";
+  $("adminNav").style.display="none";
   $("adminPanel").style.display="none";
   $("myProfileBox").style.display="none";
   $("myProfileMessage").textContent="Profilini görmek için Discord ile giriş yap.";
@@ -417,35 +438,76 @@ async function loadPlayers(){
  if(t.error){setPageMessage("Tierler yüklenemedi: "+t.error.message);return}
  allPlayers=p.data||[];
  allTiers=t.data||[];
+ updateStats();
  renderAll();
  renderMyProfile();
 }
+function updateStats(){
+ $("statPlayers").textContent=allPlayers.length;
+ $("statTiers").textContent=allTiers.length;
+}
+function sortedPlayers(){
+ let list=[...allPlayers];
+ const sort=$("sortSelect").value;
+ if(sort==="name")list.sort((a,b)=>a.minecraft_username.localeCompare(b.minecraft_username));
+ else if(sort==="newest")list.sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));
+ else list.sort((a,b)=>displayedScore(b)-displayedScore(a));
+ return list;
+}
 function renderAll(){renderPlayers();renderTopPlayers()}
-function sortedPlayers(){return [...allPlayers].sort((a,b)=>displayedScore(b)-displayedScore(a))}
 function renderTopPlayers(){
  const top=sortedPlayers().filter(p=>displayedScore(p)>0).slice(0,3);
  $("topPlayers").innerHTML="";
- if(!top.length){$("topPlayers").innerHTML='<div class="top-card" style="grid-column:1/-1;color:#9297ad">Henüz sıralama bulunmuyor.</div>';return}
+ if(!top.length){
+  $("topPlayers").innerHTML='<div class="top-card" style="grid-column:1/-1;color:#9297ad">Henüz sıralama bulunmuyor.</div>';
+  return;
+ }
  top.forEach((p,i)=>{
   const r=displayedRecord(p),k=r?kitInfo(r.kit_id):null;
-  const card=document.createElement("div");card.className="top-card"+(i===0?" first":"");
-  card.innerHTML=`<div class="top-number">${["🥇","🥈","🥉"][i]}</div><img class="top-avatar" src="${avatarUrl(p.minecraft_username)}"><div class="top-name">${escapeHtml(p.minecraft_username)}</div><div class="top-tier">${r?escapeHtml(r.tier):"Unranked"}</div><div class="top-kit">${k?k.emoji+" "+escapeHtml(k.name):"Henüz kit yok"}</div><div class="top-score">⭐ ${displayedScore(p).toFixed(1)} Puan</div>`;
-  card.addEventListener("click",()=>openPlayer(p));$("topPlayers").appendChild(card);
+  const card=document.createElement("div");
+  card.className="top-card"+(i===0?" first":"");
+  card.innerHTML=`
+   <div class="top-rank-label">TOP ${i+1}</div>
+   <div class="top-medal">${["🥇","🥈","🥉"][i]}</div>
+   <img class="top-avatar" src="${avatarUrl(p.minecraft_username)}" alt="">
+   <div class="top-name">${escapeHtml(p.minecraft_username)}</div>
+   <div class="top-tier">${tierBadge(r?r.tier:"Unranked")}</div>
+   <div class="top-kit">${k?k.emoji+" "+escapeHtml(k.name):"Henüz kit yok"}</div>
+   <div class="top-points">⭐ ${displayedScore(p).toFixed(1)} PUAN</div>`;
+  card.addEventListener("click",()=>openPlayer(p));
+  $("topPlayers").appendChild(card);
  });
 }
 function renderPlayers(){
  const q=$("search").value.trim().toLowerCase();
- const list=sortedPlayers().filter(p=>{
+ let list=sortedPlayers().filter(p=>{
   if(!(p.minecraft_username||"").toLowerCase().includes(q))return false;
   return activeKit==="General"||allTiers.some(t=>t.player_id===p.id&&t.kit_id===activeKit);
  });
- $("players").innerHTML="";$("empty").style.display=list.length?"none":"block";
+ $("players").innerHTML="";
+ $("empty").style.display=list.length?"none":"block";
  list.forEach((p,i)=>{
   const r=displayedRecord(p),k=r?kitInfo(r.kit_id):null;
-  const count=allTiers.filter(t=>t.player_id===p.id).length;
-  const card=document.createElement("div");card.className="player-card";
-  card.innerHTML=`<div class="player-rank">#${i+1}</div><img class="player-avatar" src="${avatarUrl(p.minecraft_username)}"><div class="player-info"><div class="player-name">${escapeHtml(p.minecraft_username)}</div><div class="player-sub">${count} / 8 kitte tier kaydı</div></div><div class="player-tier-area"><div class="player-tier">${r?escapeHtml(r.tier):"Unranked"}</div><div class="player-kit">${k?k.emoji+" "+escapeHtml(k.name):"—"}</div></div><div class="player-points"><div class="points-number">${displayedScore(p).toFixed(1)}</div><div class="points-label">PUAN</div></div>`;
-  card.addEventListener("click",()=>openPlayer(p));$("players").appendChild(card);
+  const count=playerTiers(p).length;
+  const card=document.createElement("div");
+  card.className="player-card";
+  card.innerHTML=`
+   <div class="player-rank">#${i+1}</div>
+   <img class="player-avatar" src="${avatarUrl(p.minecraft_username)}" alt="">
+   <div class="player-info">
+    <div class="player-name">${escapeHtml(p.minecraft_username)}</div>
+    <div class="player-sub">${count} / 8 kitte tier kaydı</div>
+   </div>
+   <div class="player-tier-area">
+    ${tierBadge(r?r.tier:"Unranked")}
+    <div class="player-kit">${k?k.emoji+" "+escapeHtml(k.name):"—"}</div>
+   </div>
+   <div class="player-points">
+    <div class="points-number">${displayedScore(p).toFixed(1)}</div>
+    <div class="points-label">PUAN</div>
+   </div>`;
+  card.addEventListener("click",()=>openPlayer(p));
+  $("players").appendChild(card);
  });
 }
 function renderTabs(){
@@ -454,7 +516,12 @@ function renderTabs(){
   const b=document.createElement("button");
   b.className="tab"+(activeKit===k.id?" active":"");
   b.textContent=k.emoji+" "+k.name;
-  b.onclick=()=>{activeKit=k.id;$("listTitle").textContent=k.name+" Sıralaması";renderTabs();renderAll()};
+  b.onclick=()=>{
+   activeKit=k.id;
+   $("listTitle").textContent=k.name+" Sıralaması";
+   renderTabs();
+   renderAll();
+  };
   $("kitTabs").appendChild(b);
  });
 }
@@ -467,18 +534,30 @@ function openPlayer(p){
  $("tierGrid").innerHTML="";
  kits.slice(1).forEach(k=>{
   const r=allTiers.find(t=>t.player_id===p.id&&t.kit_id===k.id);
-  const c=document.createElement("div");c.className="tier-card";
-  c.innerHTML=`<div class="kit-name">${k.emoji} ${escapeHtml(k.name)}</div><div class="${r?"tier":"tier empty-tier"}">${r?escapeHtml(r.tier):"Unranked"}</div><div class="player-sub">${r?tierScore(r.tier)+" puan":"—"}</div>`;
+  const c=document.createElement("div");
+  c.className="tier-card";
+  c.innerHTML=`
+   <div class="kit-name">${k.emoji} ${escapeHtml(k.name)}</div>
+   <div class="tier-value ${r?tierClass(r.tier):"empty-tier"}">${r?escapeHtml(r.tier):"Unranked"}</div>
+   <div class="player-sub">${r?tierScore(r.tier)+" puan":"Henüz tier yok"}</div>`;
   $("tierGrid").appendChild(c);
  });
- if(isAdmin){$("adminPanel").style.display="block";prepareTierEditor(p)}
+ if(isAdmin){
+  $("adminPanel").style.display="block";
+  prepareTierEditor(p);
+ }
  $("detail").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function prepareTierEditor(p){
- selectedPlayer=p;$("tierEditor").style.display="block";
+ selectedPlayer=p;
+ $("tierEditor").style.display="block";
  $("editorPlayer").textContent=p.minecraft_username+" - Tier Düzenle";
  $("editKit").innerHTML="";
- kits.slice(1).forEach(k=>{const o=document.createElement("option");o.value=k.id;o.textContent=k.emoji+" "+k.name;$("editKit").appendChild(o)});
+ kits.slice(1).forEach(k=>{
+  const o=document.createElement("option");
+  o.value=k.id;o.textContent=k.emoji+" "+k.name;
+  $("editKit").appendChild(o);
+ });
  updateEditTier();
 }
 function updateEditTier(){
@@ -487,25 +566,36 @@ function updateEditTier(){
  $("editTier").value=r?r.tier:"HT1";
 }
 async function addPlayer(e){
- e.preventDefault();if(!isAdmin)return;
- const username=$("newPlayer").value.trim(),discord=$("newDiscord").value.trim();
+ e.preventDefault();
+ if(!isAdmin)return;
+ const username=$("newPlayer").value.trim();
+ const discord=$("newDiscord").value.trim();
  if(!username)return;
- const b=$("addPlayerForm").querySelector("button");b.disabled=true;
- const data={minecraft_username:username};if(discord)data.discord_id=discord;
- const {error}=await db.from("players").insert(data);b.disabled=false;
+ const b=$("addPlayerForm").querySelector("button");
+ b.disabled=true;
+ const data={minecraft_username:username};
+ if(discord)data.discord_id=discord;
+ const {error}=await db.from("players").insert(data);
+ b.disabled=false;
  if(error){setMessage("Oyuncu eklenemedi: "+error.message,true);return}
- $("addPlayerForm").reset();setMessage("Oyuncu eklendi.");await loadPlayers();
+ $("addPlayerForm").reset();
+ setMessage("Oyuncu eklendi.");
+ await loadPlayers();
 }
 async function saveTier(e){
- e.preventDefault();if(!isAdmin||!selectedPlayer)return;
+ e.preventDefault();
+ if(!isAdmin||!selectedPlayer)return;
  const kit=$("editKit").value,tier=$("editTier").value;
  const old=allTiers.find(t=>t.player_id===selectedPlayer.id&&t.kit_id===kit);
  const result=old
- ?await db.from("player_tiers").update({tier}).eq("id",old.id)
- :await db.from("player_tiers").insert({player_id:selectedPlayer.id,kit_id:kit,tier});
+  ?await db.from("player_tiers").update({tier}).eq("id",old.id)
+  :await db.from("player_tiers").insert({player_id:selectedPlayer.id,kit_id:kit,tier});
  if(result.error){setMessage("Tier kaydedilemedi: "+result.error.message,true);return}
- const id=selectedPlayer.id;setMessage("Tier kaydedildi.");await loadPlayers();
- const p=allPlayers.find(x=>x.id===id);if(p)openPlayer(p);
+ const id=selectedPlayer.id;
+ setMessage("Tier kaydedildi.");
+ await loadPlayers();
+ const p=allPlayers.find(x=>x.id===id);
+ if(p)openPlayer(p);
 }
 async function deletePlayer(){
  if(!isAdmin||!selectedPlayer)return;
@@ -515,133 +605,27 @@ async function deletePlayer(){
  if(td.error){setMessage(td.error.message,true);return}
  const pd=await db.from("players").delete().eq("id",id);
  if(pd.error){setMessage(pd.error.message,true);return}
- selectedPlayer=null;$("detail").style.display="none";$("tierEditor").style.display="none";
- setMessage("Oyuncu silindi.");await loadPlayers();
+ selectedPlayer=null;
+ $("detail").style.display="none";
+ $("tierEditor").style.display="none";
+ setMessage("Oyuncu silindi.");
+ await loadPlayers();
 }
-
-/* KLAN VE EKİP VERİLERİ */
-async function loadCommunity(){
- const [c,m,t]=await Promise.all([
-  db.from("nexus_clans").select("*").order("name"),
-  db.from("nexus_clan_members").select("*"),
-  db.from("nexus_team").select("*").order("sort_order").order("name")
- ]);
- if(c.error||m.error||t.error){
-  $("clanGrid").innerHTML='<p class="section-sub">Klan veya ekip verileri yüklenemedi. Supabase tablolarını ve RLS ayarlarını kontrol et.</p>';
-  console.error(c.error,m.error,t.error);return;
- }
- allClans=c.data||[];allMembers=m.data||[];allTeam=t.data||[];
- renderClans();renderTeam();renderAdminLists();fillClanSelects();
-}
-function renderClans(){
- $("clanGrid").innerHTML="";
- if(!allClans.length){$("clanGrid").innerHTML='<p class="section-sub">Henüz klan oluşturulmamış.</p>';return}
- allClans.forEach(c=>{
-  const members=allMembers.filter(m=>m.clan_id===c.id);
-  const logo=c.logo_url?`<img src="${escapeHtml(c.logo_url)}" style="width:55px;height:55px;object-fit:cover;border-radius:12px;margin-bottom:10px" onerror="this.style.display='none'">`:"";
-  const names=members.map(m=>{
-   const p=allPlayers.find(x=>x.id===m.player_id);
-   return p?escapeHtml(p.minecraft_username)+" ("+escapeHtml(m.role)+")":null;
-  }).filter(Boolean);
-  const card=document.createElement("div");card.className="data-card";
-  card.innerHTML=`${logo}<h3>${escapeHtml(c.name)}</h3><span class="tag-small">[${escapeHtml(c.tag)}]</span><p>${escapeHtml(c.description||"Açıklama eklenmemiş.")}</p><div class="clan-members"><b>Üyeler (${members.length})</b><br>${names.length?names.join("<br>"):"Henüz üye yok."}</div>`;
-  $("clanGrid").appendChild(card);
+function renderGuide(){
+ $("guideGrid").innerHTML="";
+ tierValues.forEach(t=>{
+  const card=document.createElement("div");
+  card.className="guide-card";
+  card.innerHTML=`${tierBadge(t)}<p>${tierDescriptions[t]}</p>`;
+  $("guideGrid").appendChild(card);
  });
-}
-function renderTeam(){
- $("teamGrid").innerHTML="";
- if(!allTeam.length){$("teamGrid").innerHTML='<p class="section-sub">Ekip bilgileri yakında burada olacak.</p>';return}
- allTeam.forEach(t=>{
-  const card=document.createElement("div");card.className="data-card";
-  const avatar=t.avatar_url?`<img class="team-avatar" src="${escapeHtml(t.avatar_url)}" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">`:'<div class="team-avatar" style="display:grid;place-items:center;font-size:25px">✦</div>';
-  card.innerHTML=`${avatar}<h3>${escapeHtml(t.name)}</h3><span class="tag-small">${escapeHtml(t.role)}</span><p>${escapeHtml(t.description||"NexusTier ekibi")}</p>`;
-  $("teamGrid").appendChild(card);
- });
-}
-function fillClanSelects(){
- ["memberClan"].forEach(id=>{
-  const s=$(id);s.innerHTML="";
-  allClans.forEach(c=>{const o=document.createElement("option");o.value=c.id;o.textContent=c.name+" ["+c.tag+"]";s.appendChild(o)});
- });
- const p=$("memberPlayer");p.innerHTML="";
- allPlayers.forEach(x=>{const o=document.createElement("option");o.value=x.id;o.textContent=x.minecraft_username;p.appendChild(o)});
-}
-function renderAdminLists(){
- $("adminClanList").innerHTML="";
- allClans.forEach(c=>{
-  const row=document.createElement("div");row.className="admin-row";
-  const label=document.createElement("span");label.textContent=c.name+" ["+c.tag+"]";
-  const del=document.createElement("button");del.className="danger";del.textContent="Sil";
-  del.onclick=async()=>{
-   if(!confirm(c.name+" klanını ve üyeliklerini silmek istiyor musun?"))return;
-   const {error}=await db.from("nexus_clans").delete().eq("id",c.id);
-   if(error){setMessage(error.message,true);return}
-   setMessage("Klan silindi.");await loadCommunity();
-  };
-  row.append(label,del);$("adminClanList").appendChild(row);
- });
- allMembers.forEach(m=>{
-  const p=allPlayers.find(x=>x.id===m.player_id),c=allClans.find(x=>x.id===m.clan_id);
-  if(!p||!c)return;
-  const row=document.createElement("div");row.className="admin-row";
-  const label=document.createElement("span");label.textContent=p.minecraft_username+" → "+c.name+" ("+m.role+")";
-  const del=document.createElement("button");del.className="danger";del.textContent="Çıkar";
-  del.onclick=async()=>{
-   const {error}=await db.from("nexus_clan_members").delete().eq("id",m.id);
-   if(error){setMessage(error.message,true);return}
-   await loadCommunity();
-  };
-  row.append(label,del);$("adminClanList").appendChild(row);
- });
- $("adminTeamList").innerHTML="";
- allTeam.forEach(t=>{
-  const row=document.createElement("div");row.className="admin-row";
-  const label=document.createElement("span");label.textContent=t.name+" — "+t.role;
-  const del=document.createElement("button");del.className="danger";del.textContent="Sil";
-  del.onclick=async()=>{
-   if(!confirm(t.name+" ekip üyesini silmek istiyor musun?"))return;
-   const {error}=await db.from("nexus_team").delete().eq("id",t.id);
-   if(error){setMessage(error.message,true);return}
-   await loadCommunity();
-  };
-  row.append(label,del);$("adminTeamList").appendChild(row);
- });
-}
-async function addClan(e){
- e.preventDefault();if(!isAdmin)return;
- const data={
-  name:$("clanName").value.trim(),
-  tag:$("clanTag").value.trim().toUpperCase(),
-  logo_url:$("clanLogo").value.trim(),
-  description:$("clanDescription").value.trim()
- };
- const {error}=await db.from("nexus_clans").insert(data);
- if(error){setMessage("Klan oluşturulamadı: "+error.message,true);return}
- $("addClanForm").reset();setMessage("Klan oluşturuldu.");await loadCommunity();
-}
-async function addMember(e){
- e.preventDefault();if(!isAdmin)return;
- if(!$("memberClan").value||!$("memberPlayer").value){setMessage("Önce klan ve oyuncu seç.",true);return}
- const data={clan_id:$("memberClan").value,player_id:$("memberPlayer").value,role:$("memberRole").value};
- const {error}=await db.from("nexus_clan_members").insert(data);
- if(error){setMessage("Üye eklenemedi: "+error.message,true);return}
- setMessage("Oyuncu klana eklendi.");await loadCommunity();
-}
-async function addTeam(e){
- e.preventDefault();if(!isAdmin)return;
- const data={
-  name:$("teamName").value.trim(),
-  role:$("teamRole").value.trim(),
-  discord_id:$("teamDiscord").value.trim()||null,
-  avatar_url:$("teamAvatar").value.trim(),
-  description:$("teamDescription").value.trim()
- };
- const {error}=await db.from("nexus_team").insert(data);
- if(error){setMessage("Ekip üyesi eklenemedi: "+error.message,true);return}
- $("addTeamForm").reset();setMessage("Ekip üyesi eklendi.");await loadCommunity();
 }
 function renderMyProfile(){
- if(!currentUser){$("myProfileBox").style.display="none";$("myProfileMessage").textContent="Profilini görmek için Discord ile giriş yap.";return}
+ if(!currentUser){
+  $("myProfileBox").style.display="none";
+  $("myProfileMessage").textContent="Profilini görmek için Discord ile giriş yap.";
+  return;
+ }
  const d=discordDetails(currentUser);
  const player=allPlayers.find(p=>p.discord_id===d.id);
  if(!player){
@@ -651,17 +635,23 @@ function renderMyProfile(){
  }
  $("myProfileMessage").textContent="";
  $("myProfileBox").style.display="block";
- $("myPlayerInfo").innerHTML=`<img src="${avatarUrl(player.minecraft_username)}"><div><h3>${escapeHtml(player.minecraft_username)}</h3><p class="section-sub">Genel puan: ${playerScore(player).toFixed(1)}</p></div>`;
+ $("myPlayerInfo").innerHTML=`
+  <img src="${avatarUrl(player.minecraft_username)}" alt="">
+  <div><h3>${escapeHtml(player.minecraft_username)}</h3>
+  <p class="section-sub">Genel puan: ${playerScore(player).toFixed(1)}</p></div>`;
  $("myTierGrid").innerHTML="";
  kits.slice(1).forEach(k=>{
   const r=allTiers.find(t=>t.player_id===player.id&&t.kit_id===k.id);
-  const card=document.createElement("div");card.className="tier-card";
-  card.innerHTML=`<div class="kit-name">${k.emoji} ${k.name}</div><div class="${r?"tier":"tier empty-tier"}">${r?escapeHtml(r.tier):"Unranked"}</div>`;
+  const card=document.createElement("div");
+  card.className="tier-card";
+  card.innerHTML=`
+   <div class="kit-name">${k.emoji} ${escapeHtml(k.name)}</div>
+   <div class="tier-value ${r?tierClass(r.tier):"empty-tier"}">${r?escapeHtml(r.tier):"Unranked"}</div>`;
   $("myTierGrid").appendChild(card);
  });
 }
 
-/* OLAYLAR */
+/* EVENTS */
 $("loginTop").onclick=login;
 $("loginMain").onclick=login;
 $("logout").onclick=async()=>{
@@ -669,8 +659,14 @@ $("logout").onclick=async()=>{
  if(error)setPageMessage(error.message);
 };
 $("search").addEventListener("input",renderPlayers);
-$("refresh").onclick=()=>{loadPlayers();loadCommunity()};
-$("closeDetail").onclick=()=>$("detail").style.display="none";
+$("sortSelect").addEventListener("change",renderAll);
+$("refresh").onclick=async()=>{
+ await loadPlayers();
+};
+$("closeDetail").onclick=()=>{
+ $("detail").style.display="none";
+ selectedPlayer=null;
+};
 $("adminToggle").onclick=()=>{
  if(!isAdmin)return;
  $("adminPanel").style.display=$("adminPanel").style.display==="block"?"none":"block";
@@ -678,19 +674,19 @@ $("adminToggle").onclick=()=>{
 $("addPlayerForm").addEventListener("submit",addPlayer);
 $("tierForm").addEventListener("submit",saveTier);
 $("deletePlayer").onclick=deletePlayer;
-$("cancelEdit").onclick=()=>{$("tierEditor").style.display="none";selectedPlayer=null};
+$("cancelEdit").onclick=()=>{
+ $("tierEditor").style.display="none";
+ selectedPlayer=null;
+};
 $("editKit").onchange=updateEditTier;
-$("addClanForm").addEventListener("submit",addClan);
-$("addMemberForm").addEventListener("submit",addMember);
-$("addTeamForm").addEventListener("submit",addTeam);
 
 async function initialize(){
  renderTabs();
+ renderGuide();
  const {data,error}=await db.auth.getSession();
  if(error)setPageMessage("Oturum hatası: "+error.message);
  await showUser(data?.session?.user||null);
  await loadPlayers();
- await loadCommunity();
 }
 db.auth.onAuthStateChange((_event,session)=>{
  setTimeout(()=>showUser(session?.user||null),0);
