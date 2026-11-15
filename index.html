@@ -10,37 +10,26 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#080910;
-  --panel:#111321;
-  --panel2:#171a2b;
-  --border:#292d43;
-  --purple:#9875ff;
-  --purple2:#7048e8;
-  --text:#f5f3ff;
-  --muted:#9297ad;
+  --bg:#080910;--panel:#111321;--panel2:#171a2b;
+  --border:#292d43;--purple:#9875ff;--purple2:#7048e8;
+  --text:#f5f3ff;--muted:#9297ad;
 }
 body{
-  background:
-    radial-gradient(ellipse at 50% -20%,#29204d 0%,transparent 55%),
-    var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-  min-height:100vh;
+  background:radial-gradient(ellipse at 50% -20%,#29204d 0%,transparent 55%),var(--bg);
+  color:var(--text);font-family:Arial,sans-serif;min-height:100vh;
 }
 button{border:0;cursor:pointer;font-weight:bold;color:white}
 button:disabled{opacity:.5;cursor:not-allowed}
 header{
-  height:75px;padding:0 7%;
-  display:flex;align-items:center;justify-content:space-between;
-  background:#0b0c16eF;border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:10;backdrop-filter:blur(15px);
+  height:75px;padding:0 7%;display:flex;align-items:center;
+  justify-content:space-between;background:#0b0c16ef;
+  border-bottom:1px solid var(--border);position:sticky;top:0;
+  z-index:10;backdrop-filter:blur(15px);
 }
 .logo{font-size:25px;font-weight:1000;letter-spacing:1px;color:var(--purple)}
 .logo span{color:white}
 .nav{display:flex;gap:9px;align-items:center}
-.nav button,.primary{
-  background:var(--purple2);padding:12px 17px;border-radius:9px;
-}
+.nav button,.primary{background:var(--purple2);padding:12px 17px;border-radius:9px}
 .nav button:hover,.primary:hover{background:var(--purple)}
 .nav .secondary{background:#25283a}
 .discord{background:#5865f2}
@@ -48,16 +37,16 @@ main{max-width:1200px;margin:auto;padding:30px 20px}
 .hero{text-align:center;padding:55px 10px 35px}
 .tag{
   display:inline-block;padding:9px 16px;border-radius:30px;
-  background:#211a39;border:1px solid #55408c;
-  color:#c5b4ff;font-size:12px;letter-spacing:1px;margin-bottom:20px;
+  background:#211a39;border:1px solid #55408c;color:#c5b4ff;
+  font-size:12px;letter-spacing:1px;margin-bottom:20px;
 }
 h1{font-size:clamp(43px,8vw,76px);font-weight:1000;letter-spacing:-3px}
 h1 span{color:var(--purple)}
 .hero p{color:var(--muted);line-height:1.7;max-width:600px;margin:15px auto 22px}
 #profile{
-  display:none;margin:20px auto 0;padding:10px 16px;
-  width:max-content;max-width:100%;align-items:center;gap:12px;
-  background:var(--panel);border:1px solid var(--border);border-radius:13px;
+  display:none;margin:20px auto 0;padding:10px 16px;width:max-content;
+  max-width:100%;align-items:center;gap:12px;background:var(--panel);
+  border:1px solid var(--border);border-radius:13px;
 }
 #avatar{width:42px;height:42px;border-radius:50%;object-fit:cover}
 #username{font-weight:bold}
@@ -70,10 +59,7 @@ h1 span{color:var(--purple)}
 }
 .section-title{font-size:24px;font-weight:900}
 .section-sub{color:var(--muted);font-size:13px;margin-top:6px}
-.tabs{
-  display:flex;gap:8px;overflow-x:auto;padding:5px 0 15px;
-  scrollbar-width:thin;
-}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:5px 0 15px;scrollbar-width:thin}
 .tab{
   flex-shrink:0;background:#151727;border:1px solid var(--border);
   color:#aeb2c7;padding:11px 17px;border-radius:9px;
@@ -81,48 +67,92 @@ h1 span{color:var(--purple)}
 .tab.active{background:var(--purple2);border-color:var(--purple);color:white}
 .search-wrap{display:flex;gap:10px;margin-bottom:18px}
 input,select{
-  width:100%;background:#0d1020;color:white;
-  border:1px solid var(--border);border-radius:9px;
-  padding:13px;font-size:14px;outline:none;
+  width:100%;background:#0d1020;color:white;border:1px solid var(--border);
+  border-radius:9px;padding:13px;font-size:14px;outline:none;
 }
 input:focus,select:focus{border-color:var(--purple)}
 #refresh{background:#292d43;padding:0 18px;border-radius:9px}
-#topPlayers{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
-}
+
+/* İLK 3 */
+#topPlayers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .top-card{
-  position:relative;text-align:center;padding:23px 12px;
-  border-radius:15px;background:linear-gradient(145deg,#1b1b30,#111321);
-  border:1px solid var(--border);overflow:hidden;
+  position:relative;text-align:center;padding:22px 12px;border-radius:15px;
+  background:linear-gradient(145deg,#1b1b30,#111321);
+  border:1px solid var(--border);overflow:hidden;cursor:pointer;
+  transition:.2s;
 }
+.top-card:hover{transform:translateY(-4px);border-color:var(--purple)}
 .top-card.first{border-color:#a98bff;background:linear-gradient(145deg,#30234f,#151321)}
 .top-number{font-size:25px;font-weight:1000;color:#c5b1ff;margin-bottom:12px}
+.top-avatar{
+  width:65px;height:65px;object-fit:cover;border-radius:13px;
+  background:#22263a;border:2px solid #66509c;margin-bottom:10px;
+}
 .top-name{font-size:18px;font-weight:900;overflow-wrap:anywhere}
-.top-score{font-size:12px;color:var(--muted);margin-top:8px}
-#players{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:13px;
-}
+.top-tier{margin-top:9px;color:#c5b3ff;font-weight:900}
+.top-kit{font-size:12px;color:#aeb4c8;margin-top:5px}
+.top-score{font-size:13px;color:#c4b2ff;margin-top:10px;font-weight:bold}
+
+/* OYUNCU LİSTESİ */
+#players{display:flex;flex-direction:column;gap:10px}
 .player-card{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:13px;padding:17px;cursor:pointer;transition:.2s;
+  display:flex;align-items:center;gap:16px;width:100%;
+  background:linear-gradient(105deg,#141728,#10121f);
+  border:1px solid var(--border);border-radius:13px;
+  padding:13px 18px;cursor:pointer;transition:.2s;
 }
-.player-card:hover{transform:translateY(-3px);border-color:var(--purple)}
-.player-name{font-weight:900;font-size:17px;overflow-wrap:anywhere}
-.player-sub{color:var(--muted);font-size:12px;margin-top:8px}
+.player-card:hover{
+  transform:translateX(3px);border-color:var(--purple);
+  background:linear-gradient(105deg,#201a38,#121421);
+}
+.player-rank{
+  color:#777d96;font-size:14px;font-weight:bold;width:25px;
+  text-align:center;flex-shrink:0;
+}
+.player-avatar{
+  width:49px;height:49px;object-fit:cover;border-radius:11px;
+  background:#22263a;border:1px solid #343952;flex-shrink:0;
+}
+.player-info{flex:1;min-width:0}
+.player-name{font-weight:900;font-size:16px;overflow-wrap:anywhere}
+.player-sub{color:var(--muted);font-size:11px;margin-top:5px}
+.player-tier-area{
+  min-width:100px;text-align:center;display:flex;
+  flex-direction:column;align-items:center;gap:6px;
+}
 .player-tier{
-  display:inline-block;margin-top:12px;padding:6px 10px;
-  background:#282044;border:1px solid #514080;
-  border-radius:7px;color:#c5b3ff;font-size:12px;font-weight:bold;
+  display:inline-block;padding:6px 13px;border-radius:7px;
+  background:linear-gradient(135deg,#38265f,#282044);
+  border:1px solid #7456b7;color:#d4c4ff;
+  font-size:14px;font-weight:1000;
 }
+.player-kit{font-size:12px;color:#aeb4c8}
+.player-points{
+  min-width:85px;text-align:right;border-left:1px solid var(--border);
+  padding-left:16px;
+}
+.points-number{font-size:19px;font-weight:1000;color:#c5aaff}
+.points-label{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:1px}
 #loading,#empty,#message{text-align:center;padding:20px;color:var(--muted)}
 #message{color:#ff8585;overflow-wrap:anywhere}
 #empty{display:none}
+
+/* OYUNCU PROFİLİ */
 #detail{
-  display:none;margin-top:30px;padding:23px;
-  background:var(--panel);border:1px solid var(--border);border-radius:15px;
+  display:none;margin-top:30px;padding:23px;background:var(--panel);
+  border:1px solid var(--border);border-radius:15px;
 }
-.detail-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
-#detailName{font-size:26px;font-weight:900;overflow-wrap:anywhere}
+.detail-head{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;margin-bottom:20px;
+}
+.detail-user{display:flex;align-items:center;gap:14px;min-width:0}
+#detailAvatar{
+  width:65px;height:65px;object-fit:cover;border-radius:13px;
+  background:#22263a;border:1px solid var(--border);
+}
+#detailName{font-size:23px;font-weight:900;overflow-wrap:anywhere}
+.detail-score{font-size:13px;color:#c5aaff;margin-top:6px}
 #tierGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px}
 .tier-card{
   background:var(--panel2);border:1px solid var(--border);
@@ -131,22 +161,29 @@ input:focus,select:focus{border-color:var(--purple)}
 .kit-name{font-size:13px;color:#aeb4c8;margin-bottom:12px}
 .tier{font-size:23px;font-weight:1000;color:#b69cff}
 .empty-tier{color:#697187}
+
+/* ADMİN */
 #adminPanel{
-  display:none;margin:30px 0;padding:23px;
-  background:var(--panel);border:1px solid var(--purple2);border-radius:15px;
+  display:none;margin:30px 0;padding:23px;background:var(--panel);
+  border:1px solid var(--purple2);border-radius:15px;
 }
 .admin-title{font-size:23px;color:#b69cff;margin-bottom:20px}
 .admin-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .admin-form button{grid-column:1/-1}
 .admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.admin-actions button,.admin-form button{padding:12px 17px;border-radius:9px;background:var(--purple2)}
+.admin-actions button,.admin-form button{
+  padding:12px 17px;border-radius:9px;background:var(--purple2);
+}
 .danger{background:#a73550!important}
 .danger:hover{background:#d34865!important}
 #tierEditor{display:none;margin-top:25px;padding-top:20px;border-top:1px solid var(--border)}
 #editorPlayer{margin-bottom:14px}
 #adminMessage{margin-top:13px;color:#b69cff;overflow-wrap:anywhere}
 .admin-note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6}
-footer{text-align:center;padding:30px;color:#656b80;border-top:1px solid var(--border);margin-top:50px;font-size:13px}
+footer{
+  text-align:center;padding:30px;color:#656b80;
+  border-top:1px solid var(--border);margin-top:50px;font-size:13px;
+}
 @media(max-width:650px){
   header{padding:0 14px;height:65px}
   .logo{font-size:20px}
@@ -157,6 +194,24 @@ footer{text-align:center;padding:30px;color:#656b80;border-top:1px solid var(--b
   .admin-form{grid-template-columns:1fr}
   .admin-form button{grid-column:auto}
   .detail-head{align-items:flex-start}
+  .player-card{gap:9px;padding:12px 10px}
+  .player-rank{width:19px;font-size:12px}
+  .player-avatar{width:42px;height:42px}
+  .player-name{font-size:14px}
+  .player-sub{font-size:10px}
+  .player-tier-area{min-width:72px}
+  .player-tier{font-size:12px;padding:5px 9px}
+  .player-kit{font-size:10px}
+  .player-points{min-width:58px;padding-left:9px}
+  .points-number{font-size:16px}
+  .points-label{font-size:9px}
+}
+@media(max-width:380px){
+  .player-card{gap:6px;padding:10px 7px}
+  .player-avatar{width:36px;height:36px}
+  .player-rank{width:15px}
+  .player-tier-area{min-width:65px}
+  .player-points{min-width:51px;padding-left:6px}
 }
 </style>
 </head>
@@ -232,7 +287,6 @@ footer{text-align:center;padding:30px;color:#656b80;border-top:1px solid var(--b
   </div>
 
   <div class="tabs" id="kitTabs"></div>
-
   <h3 class="section-title" style="font-size:19px;margin:10px 0 15px">🏆 İlk 3 Oyuncu</h3>
   <div id="topPlayers"></div>
 </section>
@@ -241,7 +295,7 @@ footer{text-align:center;padding:30px;color:#656b80;border-top:1px solid var(--b
   <div class="section-head">
     <div>
       <h2 class="section-title" id="listTitle">Genel Sıralama</h2>
-      <p class="section-sub">Oyuncuları arayabilir ve profillerini inceleyebilirsin.</p>
+      <p class="section-sub">Oyuncu avatarı, tieri, kiti ve puanı</p>
     </div>
   </div>
 
@@ -258,9 +312,13 @@ footer{text-align:center;padding:30px;color:#656b80;border-top:1px solid var(--b
 
 <section id="detail">
   <div class="detail-head">
-    <div>
-      <div id="detailName"></div>
-      <div class="player-sub">Minecraft oyuncu profili</div>
+    <div class="detail-user">
+      <img id="detailAvatar" src="" alt="Minecraft avatarı">
+      <div>
+        <div id="detailName"></div>
+        <div class="detail-score" id="detailScore"></div>
+        <div class="player-sub">Minecraft oyuncu profili</div>
+      </div>
     </div>
     <button id="closeDetail" class="primary">Kapat</button>
   </div>
@@ -276,15 +334,15 @@ const SUPABASE_KEY="sb_publishable_3jNFB8Lbyg5_ElUH9vBKdg_4LMKkZGF";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const kits=[
-  {id:"General",name:"Genel"},
-  {id:"Sword",name:"Sword"},
-  {id:"Axe",name:"Axe"},
-  {id:"Crystal",name:"Crystal"},
-  {id:"UHC",name:"UHC"},
-  {id:"Pot",name:"Pot"},
-  {id:"SMP",name:"SMP"},
-  {id:"NethPot",name:"NethPot"},
-  {id:"Mace",name:"Mace"}
+  {id:"General",name:"Genel",emoji:"🏆"},
+  {id:"Sword",name:"Sword",emoji:"⚔️"},
+  {id:"Axe",name:"Axe",emoji:"🪓"},
+  {id:"Crystal",name:"Crystal",emoji:"💎"},
+  {id:"UHC",name:"UHC",emoji:"🏹"},
+  {id:"Pot",name:"Pot",emoji:"🧪"},
+  {id:"SMP",name:"SMP",emoji:"🌍"},
+  {id:"NethPot",name:"NethPot",emoji:"🔮"},
+  {id:"Mace",name:"Mace",emoji:"🔨"}
 ];
 
 const tierValues=["HT1","LT1","HT2","LT2","HT3","LT3","HT4","LT4","HT5","LT5"];
@@ -303,6 +361,10 @@ function escapeHtml(value){
   })[char]);
 }
 
+function avatarUrl(username){
+  return "https://mc-heads.net/avatar/"+encodeURIComponent(username)+"/64";
+}
+
 function tierScore(tier){
   const index=tierValues.indexOf(tier);
   return index<0?0:10-index;
@@ -317,6 +379,28 @@ function playerScore(player){
 function playerKitScore(player,kitId){
   const record=allTiers.find(t=>t.player_id===player.id&&t.kit_id===kitId);
   return record?tierScore(record.tier):0;
+}
+
+function getBestRecord(player){
+  const records=allTiers.filter(t=>t.player_id===player.id);
+  if(!records.length)return null;
+  return records.sort((a,b)=>tierScore(b.tier)-tierScore(a.tier))[0];
+}
+
+function getDisplayedRecord(player){
+  if(activeKit==="General")return getBestRecord(player);
+  return allTiers.find(t=>t.player_id===player.id&&t.kit_id===activeKit)||null;
+}
+
+function getDisplayedKit(record){
+  if(!record)return null;
+  return kits.find(k=>k.id===record.kit_id)||null;
+}
+
+function getDisplayedScore(player){
+  return activeKit==="General"
+    ?playerScore(player)
+    :playerKitScore(player,activeKit);
 }
 
 function login(){
@@ -363,13 +447,8 @@ async function showUser(user){
   const identity=user.identities?.[0]?.identity_data||{};
 
   const name=
-    identity.global_name||
-    meta.global_name||
-    identity.username||
-    meta.user_name||
-    meta.full_name||
-    meta.name||
-    "Discord Kullanıcısı";
+    identity.global_name||meta.global_name||identity.username||
+    meta.user_name||meta.full_name||meta.name||"Discord Kullanıcısı";
 
   const discordId=identity.sub||meta.provider_id||"";
   const avatarHash=identity.avatar||meta.avatar||"";
@@ -431,21 +510,12 @@ function renderAll(){
 
 function getSortedPlayers(){
   const sorted=[...allPlayers];
-
-  sorted.sort((a,b)=>{
-    if(activeKit==="General")return playerScore(b)-playerScore(a);
-    return playerKitScore(b,activeKit)-playerKitScore(a,activeKit);
-  });
-
+  sorted.sort((a,b)=>getDisplayedScore(b)-getDisplayedScore(a));
   return sorted;
 }
 
 function renderTopPlayers(){
-  const sorted=getSortedPlayers().filter(player=>{
-    return activeKit==="General"
-      ? playerScore(player)>0
-      : playerKitScore(player,activeKit)>0;
-  }).slice(0,3);
+  const sorted=getSortedPlayers().filter(player=>getDisplayedScore(player)>0).slice(0,3);
 
   $("topPlayers").innerHTML="";
 
@@ -456,9 +526,9 @@ function renderTopPlayers(){
   }
 
   sorted.forEach((player,index)=>{
-    const score=activeKit==="General"
-      ? playerScore(player)
-      : playerKitScore(player,activeKit);
+    const score=getDisplayedScore(player);
+    const record=getDisplayedRecord(player);
+    const kit=getDisplayedKit(record);
 
     const card=document.createElement("div");
     card.className="top-card"+(index===0?" first":"");
@@ -467,17 +537,28 @@ function renderTopPlayers(){
     number.className="top-number";
     number.textContent=["🥇","🥈","🥉"][index];
 
+    const avatar=document.createElement("img");
+    avatar.className="top-avatar";
+    avatar.src=avatarUrl(player.minecraft_username);
+    avatar.alt=player.minecraft_username;
+
     const name=document.createElement("div");
     name.className="top-name";
     name.textContent=player.minecraft_username;
 
+    const tier=document.createElement("div");
+    tier.className="top-tier";
+    tier.textContent=record?record.tier:"Unranked";
+
+    const kitText=document.createElement("div");
+    kitText.className="top-kit";
+    kitText.textContent=kit?kit.emoji+" "+kit.name:"Henüz kit yok";
+
     const scoreText=document.createElement("div");
     scoreText.className="top-score";
-    scoreText.textContent=activeKit==="General"
-      ? "Genel puan: "+score.toFixed(1)
-      : activeKit+" puanı: "+score;
+    scoreText.textContent="⭐ "+score.toFixed(1)+" Puan";
 
-    card.append(number,name,scoreText);
+    card.append(number,avatar,name,tier,kitText,scoreText);
     card.addEventListener("click",()=>openPlayer(player));
     $("topPlayers").appendChild(card);
   });
@@ -492,9 +573,7 @@ function renderPlayers(){
 
     if(activeKit==="General")return true;
 
-    return allTiers.some(t=>
-      t.player_id===player.id&&t.kit_id===activeKit
-    );
+    return allTiers.some(t=>t.player_id===player.id&&t.kit_id===activeKit);
   });
 
   $("players").innerHTML="";
@@ -502,30 +581,65 @@ function renderPlayers(){
 
   filtered.forEach((player,index)=>{
     const records=allTiers.filter(t=>t.player_id===player.id);
+    const record=getDisplayedRecord(player);
+    const kit=getDisplayedKit(record);
+    const score=getDisplayedScore(player);
+
     const card=document.createElement("div");
     card.className="player-card";
 
+    const rank=document.createElement("div");
+    rank.className="player-rank";
+    rank.textContent="#"+(index+1);
+
+    const avatar=document.createElement("img");
+    avatar.className="player-avatar";
+    avatar.src=avatarUrl(player.minecraft_username);
+    avatar.alt=player.minecraft_username;
+    avatar.loading="lazy";
+    avatar.onerror=()=>{avatar.src="https://cdn.discordapp.com/embed/avatars/0.png"};
+
+    const info=document.createElement("div");
+    info.className="player-info";
+
     const name=document.createElement("div");
     name.className="player-name";
-    name.textContent=(index+1)+". "+player.minecraft_username;
+    name.textContent=player.minecraft_username;
 
     const sub=document.createElement("div");
     sub.className="player-sub";
     sub.textContent=records.length+" / 8 kitte tier kaydı";
 
+    info.append(name,sub);
+
+    const tierArea=document.createElement("div");
+    tierArea.className="player-tier-area";
+
     const tier=document.createElement("div");
     tier.className="player-tier";
+    tier.textContent=record?record.tier:"Unranked";
 
-    if(activeKit==="General"){
-      const best=records.sort((a,b)=>tierScore(a.tier)-tierScore(b.tier))[0];
-      tier.textContent=best?"En iyi tier: "+best.tier:"Unranked";
-    }else{
-      const record=records.find(t=>t.kit_id===activeKit);
-      tier.textContent=record?record.tier:"Unranked";
-    }
+    const kitText=document.createElement("div");
+    kitText.className="player-kit";
+    kitText.textContent=kit?kit.emoji+" "+kit.name:"—";
 
-    card.append(name,sub,tier);
+    tierArea.append(tier,kitText);
+
+    const points=document.createElement("div");
+    points.className="player-points";
+
+    const pointsNumber=document.createElement("div");
+    pointsNumber.className="points-number";
+    pointsNumber.textContent=score.toFixed(1);
+
+    const pointsLabel=document.createElement("div");
+    pointsLabel.className="points-label";
+    pointsLabel.textContent="PUAN";
+
+    points.append(pointsNumber,pointsLabel);
+    card.append(rank,avatar,info,tierArea,points);
     card.addEventListener("click",()=>openPlayer(player));
+
     $("players").appendChild(card);
   });
 }
@@ -536,7 +650,7 @@ function renderTabs(){
   kits.forEach(kit=>{
     const button=document.createElement("button");
     button.className="tab"+(activeKit===kit.id?" active":"");
-    button.textContent=kit.name;
+    button.textContent=kit.id==="General"?"🏆 Genel":kit.emoji+" "+kit.name;
 
     button.addEventListener("click",()=>{
       activeKit=kit.id;
@@ -553,25 +667,30 @@ function openPlayer(player){
   selectedPlayer=player;
   $("detail").style.display="block";
   $("detailName").textContent=player.minecraft_username;
+  $("detailAvatar").src=avatarUrl(player.minecraft_username);
+  $("detailAvatar").onerror=()=>{$("detailAvatar").src="https://cdn.discordapp.com/embed/avatars/0.png"};
+  $("detailScore").textContent="⭐ Genel puan: "+playerScore(player).toFixed(1);
   $("tierGrid").innerHTML="";
 
   kits.slice(1).forEach(kit=>{
-    const record=allTiers.find(t=>
-      t.player_id===player.id&&t.kit_id===kit.id
-    );
+    const record=allTiers.find(t=>t.player_id===player.id&&t.kit_id===kit.id);
 
     const card=document.createElement("div");
     card.className="tier-card";
 
     const kitName=document.createElement("div");
     kitName.className="kit-name";
-    kitName.textContent=kit.name;
+    kitName.textContent=kit.emoji+" "+kit.name;
 
     const tier=document.createElement("div");
     tier.className=record?"tier":"tier empty-tier";
     tier.textContent=record?record.tier:"Unranked";
 
-    card.append(kitName,tier);
+    const score=document.createElement("div");
+    score.className="player-sub";
+    score.textContent=record?tierScore(record.tier)+" puan":"—";
+
+    card.append(kitName,tier,score);
     $("tierGrid").appendChild(card);
   });
 
@@ -590,7 +709,6 @@ function setAdminMessage(message,isError=false){
 
 async function addPlayer(event){
   event.preventDefault();
-
   if(!isAdmin)return;
 
   const username=$("newPlayer").value.trim();
@@ -608,7 +726,6 @@ async function addPlayer(event){
   if(discordId)playerData.discord_id=discordId;
 
   const {error}=await db.from("players").insert(playerData);
-
   button.disabled=false;
 
   if(error){
@@ -627,48 +744,36 @@ function prepareTierEditor(player){
   selectedPlayer=player;
   $("tierEditor").style.display="block";
   $("editorPlayer").textContent=player.minecraft_username+" - Tier Düzenle";
-
   $("editKit").innerHTML="";
 
   kits.slice(1).forEach(kit=>{
     const option=document.createElement("option");
     option.value=kit.id;
-    option.textContent=kit.name;
+    option.textContent=kit.emoji+" "+kit.name;
     $("editKit").appendChild(option);
   });
 
-  const existing=allTiers.find(t=>
-    t.player_id===player.id&&t.kit_id===$("editKit").value
-  );
-
+  const existing=allTiers.find(t=>t.player_id===player.id&&t.kit_id===$("editKit").value);
   $("editTier").value=existing?existing.tier:"HT1";
 }
 
 async function saveTier(event){
   event.preventDefault();
-
   if(!isAdmin||!selectedPlayer)return;
 
   const kitId=$("editKit").value;
   const tierValue=$("editTier").value;
 
-  const existing=allTiers.find(t=>
-    t.player_id===selectedPlayer.id&&t.kit_id===kitId
-  );
+  const existing=allTiers.find(t=>t.player_id===selectedPlayer.id&&t.kit_id===kitId);
 
   let result;
 
   if(existing){
-    result=await db.from("player_tiers")
-      .update({tier:tierValue})
-      .eq("id",existing.id);
+    result=await db.from("player_tiers").update({tier:tierValue}).eq("id",existing.id);
   }else{
-    result=await db.from("player_tiers")
-      .insert({
-        player_id:selectedPlayer.id,
-        kit_id:kitId,
-        tier:tierValue
-      });
+    result=await db.from("player_tiers").insert({
+      player_id:selectedPlayer.id,kit_id:kitId,tier:tierValue
+    });
   }
 
   if(result.error){
@@ -677,9 +782,10 @@ async function saveTier(event){
   }
 
   setAdminMessage("Tier başarıyla kaydedildi!");
+  const playerId=selectedPlayer.id;
   await loadPlayers();
 
-  const updatedPlayer=allPlayers.find(p=>p.id===selectedPlayer.id);
+  const updatedPlayer=allPlayers.find(p=>p.id===playerId);
   if(updatedPlayer)openPlayer(updatedPlayer);
 }
 
@@ -688,17 +794,12 @@ async function deletePlayer(){
 
   const player=selectedPlayer;
 
-  if(!confirm(player.minecraft_username+
-    " oyuncusunu ve tüm tier kayıtlarını silmek istediğine emin misin?")){
-    return;
-  }
+  if(!confirm(player.minecraft_username+" oyuncusunu ve tüm tier kayıtlarını silmek istediğine emin misin?"))return;
 
   const playerId=player.id;
   $("deletePlayer").disabled=true;
 
-  const tierDelete=await db.from("player_tiers")
-    .delete()
-    .eq("player_id",playerId);
+  const tierDelete=await db.from("player_tiers").delete().eq("player_id",playerId);
 
   if(tierDelete.error){
     $("deletePlayer").disabled=false;
@@ -706,10 +807,7 @@ async function deletePlayer(){
     return;
   }
 
-  const playerDelete=await db.from("players")
-    .delete()
-    .eq("id",playerId);
-
+  const playerDelete=await db.from("players").delete().eq("id",playerId);
   $("deletePlayer").disabled=false;
 
   if(playerDelete.error){
@@ -729,11 +827,8 @@ $("loginMain").addEventListener("click",login);
 
 $("logout").addEventListener("click",async()=>{
   const {error}=await db.auth.signOut();
-  if(error){
-    $("message").textContent=error.message;
-  }else{
-    await showUser(null);
-  }
+  if(error)$("message").textContent=error.message;
+  else await showUser(null);
 });
 
 $("search").addEventListener("input",renderPlayers);
@@ -745,9 +840,7 @@ $("closeDetail").addEventListener("click",()=>{
 
 $("adminToggle").addEventListener("click",()=>{
   if(!isAdmin)return;
-
-  $("adminPanel").style.display=
-    $("adminPanel").style.display==="block"?"none":"block";
+  $("adminPanel").style.display=$("adminPanel").style.display==="block"?"none":"block";
 });
 
 $("addPlayerForm").addEventListener("submit",addPlayer);
@@ -761,11 +854,7 @@ $("cancelEdit").addEventListener("click",()=>{
 
 $("editKit").addEventListener("change",()=>{
   if(!selectedPlayer)return;
-
-  const existing=allTiers.find(t=>
-    t.player_id===selectedPlayer.id&&t.kit_id===$("editKit").value
-  );
-
+  const existing=allTiers.find(t=>t.player_id===selectedPlayer.id&&t.kit_id===$("editKit").value);
   $("editTier").value=existing?existing.tier:"HT1";
 });
 
@@ -774,11 +863,8 @@ async function initialize(){
 
   const {data,error}=await db.auth.getSession();
 
-  if(error){
-    $("message").textContent="Oturum hatası: "+error.message;
-  }else{
-    await showUser(data.session?.user||null);
-  }
+  if(error)$("message").textContent="Oturum hatası: "+error.message;
+  else await showUser(data.session?.user||null);
 
   await loadPlayers();
 }
